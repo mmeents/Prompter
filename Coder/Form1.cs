@@ -40,7 +40,7 @@ namespace Prompter {
           string pw = edPassword.Text;
           _key = new CryptoKey();
           _key.SetCryptoKey(pw);      
-          _itemCaster = new ItemCaster(_key, _fileName);
+          _itemCaster = new ItemCaster(tvBuilder, _key, _fileName);
           e.Cancel= (!(pw.Length>0)) || (!(Directory.Exists(_folder)));
         } catch (Exception ex) {
           logMsg(ex.Message);
@@ -102,14 +102,19 @@ namespace Prompter {
       }
     }
 
+    private void tvBuilder_ItemDrag(object sender, ItemDragEventArgs e) {
+      if(e.Button==MouseButtons.Left) {
+        DoDragDrop(e.Item, DragDropEffects.Move);
+      }
+    }
     private void tvBuilder_DragEnter(object sender, DragEventArgs e) {
-      e.Effect= DragDropEffects.None;
+      e.Effect= DragDropEffects.Move;
     }
 
-    private void tvBuilder_DragOver(object sender, DragEventArgs e) {
+    private void tvBuilder_DragOver(object sender, DragEventArgs e) {      
       if(e.Data!=null) {
         ItemType sn = (ItemType)e.Data.GetData(typeof(ItemType));
-        if(sn!=null) {
+        if(sn!=null) { // this is copy from tvtools.
           Point targetPt = tvBuilder.PointToClient(new Point(e.X, e.Y));
           Item tn = (Item)tvBuilder.GetNodeAt(targetPt);
           if(tn!=null) {
@@ -129,6 +134,30 @@ namespace Prompter {
               e.Effect=DragDropEffects.None;
             }
           }
+        } else {  // this is copy with tvBuilder
+          Item sni = (Item)e.Data.GetData(typeof(Item));
+          if (sni !=null) {
+            Point targetPt = tvBuilder.PointToClient(new Point(e.X, e.Y));
+            Item tn = (Item)tvBuilder.GetNodeAt(targetPt);
+            if (tn != sni) { 
+              if(tn!=null) {
+                e.Effect=DragDropEffects.None;
+                if(!tn.IsExpanded) tn.Expand();
+                if(sni.TypeId==(int)TnType.Template&&(tn.TypeId==(int)TnType.Project||tn.TypeId==(int)TnType.Template)) e.Effect=DragDropEffects.Move;
+                if(sni.TypeId==(int)TnType.Chapters&&tn.TypeId==(int)TnType.Project) e.Effect=DragDropEffects.Move;
+                if(sni.TypeId==(int)TnType.Chapter&&tn.TypeId==(int)TnType.Chapters) e.Effect=DragDropEffects.Move;
+                if(sni.TypeId==(int)TnType.Section&&tn.TypeId==(int)TnType.Chapter) e.Effect=DragDropEffects.Move;
+                if(sni.TypeId==(int)TnType.SubSection&&(tn.TypeId==(int)TnType.Section)||(tn.TypeId==(int)TnType.SubSection)) e.Effect=DragDropEffects.Move;
+
+              } else {
+                if(sni.TypeId==(int)TnType.Project) {
+                  e.Effect=DragDropEffects.Move;
+                } else {
+                  e.Effect=DragDropEffects.None;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -137,17 +166,37 @@ namespace Prompter {
       Point targetPt = tvBuilder.PointToClient(new Point(e.X, e.Y));
       Item tn = (Item)tvBuilder.GetNodeAt(targetPt);
       if(tn!=null&&e.Data!=null) {
+
         ItemType draggedNode = (ItemType)e.Data.GetData(typeof(ItemType));
-        if        (draggedNode.TypeId==(int)TnType.Template&& (tn.TypeId==(int)TnType.Project||tn.TypeId==(int)TnType.Template)) {
-          var nn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
-        } else if((draggedNode.TypeId==(int)TnType.SubSection)&&(tn.TypeId==(int)TnType.Section||tn.TypeId == (int)TnType.SubSection)) {
-          var nn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
-        } else if((draggedNode.TypeId==(int)TnType.Section&&tn.TypeId==(int)TnType.Chapter)) {
-          var fnn=_itemCaster.SaveNewItemFromType(tn, draggedNode);
-        } else if((draggedNode.TypeId==(int)TnType.Chapters&&tn.TypeId==(int)TnType.Project)) {
-          var fnn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
-        } else if((draggedNode.TypeId==(int)TnType.Chapter&&tn.TypeId==(int)TnType.Chapters)) {
-          var fnn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+        if (draggedNode !=null) { 
+          if        (draggedNode.TypeId==(int)TnType.Template&& (tn.TypeId==(int)TnType.Project||tn.TypeId==(int)TnType.Template)) {
+            var nn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+          } else if((draggedNode.TypeId==(int)TnType.SubSection)&&(tn.TypeId==(int)TnType.Section||tn.TypeId == (int)TnType.SubSection)) {
+            var nn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+          } else if((draggedNode.TypeId==(int)TnType.Section&&tn.TypeId==(int)TnType.Chapter)) {
+            var fnn=_itemCaster.SaveNewItemFromType(tn, draggedNode);
+          } else if((draggedNode.TypeId==(int)TnType.Chapters&&tn.TypeId==(int)TnType.Project)) {
+            var fnn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+          } else if((draggedNode.TypeId==(int)TnType.Chapter&&tn.TypeId==(int)TnType.Chapters)) {
+            var fnn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+          }
+        } else {
+
+          Item dragNode = (Item)e.Data.GetData(typeof(Item));
+          if(dragNode!=null) {
+            if(dragNode.TypeId==(int)TnType.Template&&(tn.TypeId==(int)TnType.Project||tn.TypeId==(int)TnType.Template)) {
+              var nn = _itemCaster.MoveItemSave(tn, dragNode);
+            } else if((dragNode.TypeId==(int)TnType.SubSection)&&(tn.TypeId==(int)TnType.Section||tn.TypeId==(int)TnType.SubSection)) {
+              var nn = _itemCaster.MoveItemSave(tn, dragNode);
+            } else if((dragNode.TypeId==(int)TnType.Section&&tn.TypeId==(int)TnType.Chapter)) {
+              var fnn = _itemCaster.MoveItemSave(tn, dragNode);
+            } else if((dragNode.TypeId==(int)TnType.Chapters&&tn.TypeId==(int)TnType.Project)) {
+              var fnn = _itemCaster.MoveItemSave(tn, dragNode);
+            } else if((dragNode.TypeId==(int)TnType.Chapter&&tn.TypeId==(int)TnType.Chapters)) {
+              var fnn = _itemCaster.MoveItemSave(tn, dragNode);
+            }
+          } 
+
         }
       } else {
         if(e.Data!=null) {
@@ -157,7 +206,7 @@ namespace Prompter {
               var newItem = _itemCaster.SaveNewItemFromType(null, draggedNode);
               tvBuilder.Nodes.Add(newItem);
             }
-          }
+          } 
         }
       }
     }
@@ -259,8 +308,8 @@ namespace Prompter {
       label3.Text = (_inEditItem==null) ? "" : _inEditItem.Text;
     }
     private void ResetbtnInputVisibility() {
-      btnInput.Visible=(tabControl2.SelectedIndex==1);
-      btnInput.Enabled=(_inEditItem!=null)&&(edInput.Text.Length>0)&&(
+      btnParse.Visible=(tabControl2.SelectedIndex==1);
+      btnParse.Enabled=(_inEditItem!=null)&&(edInput.Text.Length>0)&&(
         _inEditItem.TypeId==(int)TnType.Template
         ||_inEditItem.TypeId==(int)TnType.Chapters
         ||_inEditItem.TypeId==(int)TnType.Chapter
@@ -273,17 +322,17 @@ namespace Prompter {
       ResetbtnInputVisibility();
     }
 
-    private void btnInput_Click(object sender, EventArgs e) {
-      if(_inEditItem==null) { return;}
+    private void btnParse_Click(object sender, EventArgs e) {
+      if(_inEditItem==null) { return; }
       string content = edInput.Text;
       int dropTypeId = _inEditItem.TypeId;
-      if (dropTypeId==(int)TnType.Project ||dropTypeId==(int)TnType.Template) {        
-        _ = _itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Template], content);         
-      } else if(dropTypeId==(int)TnType.Chapters) {        
+      if(dropTypeId==(int)TnType.Project||dropTypeId==(int)TnType.Template) {
+        _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Template], content);
+      } else if(dropTypeId==(int)TnType.Chapters) {
         _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Chapter], content);
       } else if(dropTypeId==(int)TnType.Chapter) {
         _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Section], content);
-      } else if(dropTypeId==(int)TnType.Section || dropTypeId==(int) TnType.SubSection)  {
+      } else if(dropTypeId==(int)TnType.Section||dropTypeId==(int)TnType.SubSection) {
         _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.SubSection], content);
       }
     }
@@ -320,6 +369,9 @@ namespace Prompter {
     private void ProcessEditOut(Item it) {
       if (cbPrompt.Checked &&it.ValueTypeId>0) { 
         string promptTemplate = _types[it.ValueTypeId].Desc;
+        if (promptTemplate ==String.Empty && it.ValueTypeId==47) {  // 47 is current node is template.
+          promptTemplate = it.Text;
+        }
         string GrandParent="", Parent="", Node = "";
         if(it.OwnerId>0) {
           if(it.Parent!=null) {
@@ -342,14 +394,16 @@ namespace Prompter {
         }      
         string tag = "";
         foreach(Item c in it.Nodes) {
-          string childContent = GetChildContent(c);
-          if(c.Text[0]=='[') {
-            tag = c.Text.Insert(1,"/");          
-            s = s + Cs.nl+ c.Text+Cs.nl+childContent+Cs.nl+tag;
-          } else {
-            s= s + Cs.nl + c.Text+Cs.nl+childContent+Cs.nl;
+          if (c.ValueTypeId !=47) {  // templates dont print here.
+            string childContent = GetChildContent(c);
+            if(c.Text[0]=='[') {
+              tag = c.Text.Insert(1,"/");          
+              s = s + Cs.nl+ c.Text+Cs.nl+childContent+Cs.nl+tag;
+            } else {
+              s= s + Cs.nl + c.Text+Cs.nl+childContent+Cs.nl;
+            }
+            s= s+Cs.nl;
           }
-          s= s+Cs.nl;
         }
         edOutput.Text = s+Cs.nl;
       }
@@ -374,5 +428,7 @@ namespace Prompter {
     private void scRoot2_SplitterMoved(object sender, SplitterEventArgs e) {
       tvBuilder.Height=splitContainer1.Height-panel2.Height-2;
     }
+
+
   }
 }

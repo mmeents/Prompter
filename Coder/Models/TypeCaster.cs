@@ -147,6 +147,7 @@ namespace Prompter.Models {
       this[44]=new ItemType() { TypeId=44, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=1, TypeEnum=1, Visible=false, Readonly=true, Name="Hook", Desc="brainstorm 10 story hooks for a Creative Descriptive Objective Expository Narrative Technical Review for [NODE] " };
       this[45]=new ItemType() { TypeId=45, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=2, TypeEnum=2, Visible=false, Readonly=true, Name="Expository Hook's ending", Desc= $"in context of '[PARENT]', based on the premise of [NODE] hook, can we brainstorm 10 different threads of detail and order them by importance?" };
       this[46]=new ItemType() { TypeId=46, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=3, TypeEnum=3, Visible=false, Readonly=true, Name="Expository Synopsis", Desc=$"Given the following premise and ending, devise a detailed story synopsis that is structured as \"[PARENT]\". Make sure to include plenty of detail and examples. Premise: [GRANDPARENT]. Ending: [NODE]." };
+      this[47]=new ItemType() { TypeId=47, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=3, TypeEnum=3, Visible=false, Readonly=true, Name="Child Template", Desc=String.Empty };
 
 
 

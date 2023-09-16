@@ -104,12 +104,14 @@ namespace Prompter.Models {
   }
 
   public class ItemCaster { 
+    private TreeView _tv;
     private CryptoVars _cryptoVars;
     private Items _items;
     
-    public ItemCaster(CryptoKey key, string fileName) {
+    public ItemCaster(TreeView tv, CryptoKey key, string fileName) {
       _items = new Items();
       _cryptoVars=new CryptoVars();
+      _tv = tv;
       _cryptoVars.FileName=fileName;
       _cryptoVars.SetKey(key);
       _cryptoVars.LoadValues();
@@ -202,6 +204,32 @@ namespace Prompter.Models {
         ownerItem.Expand();
       }
       return dbs;
+    }
+
+    public Item MoveItemSave(Item newOwnerItem, Item DragItem) {
+      bool SaveDragged = false;
+      if(newOwnerItem==null) {
+        if(!_tv.Nodes.Contains(DragItem)) {
+          if(DragItem.Parent.Nodes.Contains(DragItem)) {
+            DragItem.Parent.Nodes.Remove(DragItem);
+          }
+          _tv.Nodes.Add(DragItem);
+          DragItem.OwnerId = 0;
+          SaveDragged=true;
+        } else { 
+        }        
+      } else {
+        if (!newOwnerItem.Nodes.Contains(DragItem)){
+          if(DragItem.Parent.Nodes.Contains(DragItem)) {
+            DragItem.Parent.Nodes.Remove(DragItem);
+          }
+          newOwnerItem.Nodes.Add(DragItem);
+          DragItem.OwnerId = newOwnerItem.Id;
+          SaveDragged = true;
+        }         
+      }
+      if(SaveDragged) SaveItem(DragItem);      
+      return DragItem;
     }
 
     public Item SaveNewChildItemsFromText(Item ownerItem, ItemType itemType, string text) {             

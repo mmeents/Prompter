@@ -60,10 +60,11 @@
       this.panel2 = new System.Windows.Forms.Panel();
       this.parseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.label3 = new System.Windows.Forms.Label();
+      this.cbPrompt = new System.Windows.Forms.CheckBox();
+      this.label4 = new System.Windows.Forms.Label();
+      this.btnParse = new System.Windows.Forms.Button();
       this.btnPaste = new System.Windows.Forms.Button();
       this.btnClear = new System.Windows.Forms.Button();
-      this.btnInput = new System.Windows.Forms.Button();
-      this.cbPrompt = new System.Windows.Forms.CheckBox();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.tabPage2.SuspendLayout();
@@ -71,7 +72,6 @@
       this.scRoot.Panel1.SuspendLayout();
       this.scRoot.Panel2.SuspendLayout();
       this.scRoot.SuspendLayout();
-      this.panel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.scRoot2)).BeginInit();
       this.scRoot2.Panel1.SuspendLayout();
       this.scRoot2.Panel2.SuspendLayout();
@@ -100,7 +100,7 @@
       this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(1022, 854);
+      this.tabControl1.Size = new System.Drawing.Size(1007, 854);
       this.tabControl1.TabIndex = 0;
       this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
       this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
@@ -204,7 +204,7 @@
       this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabPage2.Name = "tabPage2";
       this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.tabPage2.Size = new System.Drawing.Size(1014, 818);
+      this.tabPage2.Size = new System.Drawing.Size(999, 818);
       this.tabPage2.TabIndex = 1;
       this.tabPage2.Text = "Builder";
       this.tabPage2.UseVisualStyleBackColor = true;
@@ -224,8 +224,8 @@
       // scRoot.Panel2
       // 
       this.scRoot.Panel2.Controls.Add(this.scRoot2);
-      this.scRoot.Size = new System.Drawing.Size(1008, 810);
-      this.scRoot.SplitterDistance = 232;
+      this.scRoot.Size = new System.Drawing.Size(993, 810);
+      this.scRoot.SplitterDistance = 229;
       this.scRoot.TabIndex = 1;
       // 
       // tvTools
@@ -238,7 +238,7 @@
       this.tvTools.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tvTools.Name = "tvTools";
       this.tvTools.SelectedImageIndex = 0;
-      this.tvTools.Size = new System.Drawing.Size(232, 722);
+      this.tvTools.Size = new System.Drawing.Size(229, 722);
       this.tvTools.TabIndex = 1;
       this.tvTools.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvTools_ItemDrag);
       this.tvTools.DragOver += new System.Windows.Forms.DragEventHandler(this.tvTools_DragOver);
@@ -270,14 +270,11 @@
       // 
       // panel1
       // 
-      this.panel1.Controls.Add(this.btnPaste);
-      this.panel1.Controls.Add(this.btnClear);
-      this.panel1.Controls.Add(this.btnInput);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(232, 88);
+      this.panel1.Size = new System.Drawing.Size(229, 88);
       this.panel1.TabIndex = 0;
       // 
       // scRoot2
@@ -296,7 +293,7 @@
       // scRoot2.Panel2
       // 
       this.scRoot2.Panel2.Controls.Add(this.props);
-      this.scRoot2.Size = new System.Drawing.Size(772, 810);
+      this.scRoot2.Size = new System.Drawing.Size(760, 810);
       this.scRoot2.SplitterDistance = 596;
       this.scRoot2.TabIndex = 0;
       this.scRoot2.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.scRoot2_SplitterMoved);
@@ -333,7 +330,7 @@
             this.pasteToolStripMenuItem,
             this.parseToolStripMenuItem});
       this.contextMenuStrip2.Name = "contextMenuStrip2";
-      this.contextMenuStrip2.Size = new System.Drawing.Size(113, 100);
+      this.contextMenuStrip2.Size = new System.Drawing.Size(151, 100);
       this.contextMenuStrip2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip2_Opening);
       // 
       // clearToolStripMenuItem
@@ -364,12 +361,16 @@
       // 
       // panel3
       // 
+      this.panel3.Controls.Add(this.btnClear);
+      this.panel3.Controls.Add(this.btnPaste);
+      this.panel3.Controls.Add(this.btnParse);
+      this.panel3.Controls.Add(this.label4);
       this.panel3.Controls.Add(this.label3);
       this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
       this.panel3.Location = new System.Drawing.Point(0, 0);
       this.panel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.panel3.Name = "panel3";
-      this.panel3.Size = new System.Drawing.Size(772, 60);
+      this.panel3.Size = new System.Drawing.Size(760, 60);
       this.panel3.TabIndex = 2;
       // 
       // props
@@ -382,7 +383,7 @@
       this.props.DocCommentDescription.Location = new System.Drawing.Point(4, 29);
       this.props.DocCommentDescription.Margin = new System.Windows.Forms.Padding(32, 0, 32, 0);
       this.props.DocCommentDescription.Name = "";
-      this.props.DocCommentDescription.Size = new System.Drawing.Size(764, 40);
+      this.props.DocCommentDescription.Size = new System.Drawing.Size(752, 40);
       this.props.DocCommentDescription.TabIndex = 1;
       this.props.DocCommentImage = null;
       // 
@@ -393,14 +394,14 @@
       this.props.DocCommentTitle.Location = new System.Drawing.Point(4, 4);
       this.props.DocCommentTitle.Margin = new System.Windows.Forms.Padding(32, 0, 32, 0);
       this.props.DocCommentTitle.Name = "";
-      this.props.DocCommentTitle.Size = new System.Drawing.Size(764, 25);
+      this.props.DocCommentTitle.Size = new System.Drawing.Size(752, 25);
       this.props.DocCommentTitle.TabIndex = 0;
       this.props.DocCommentTitle.UseMnemonic = false;
       this.props.Dock = System.Windows.Forms.DockStyle.Fill;
       this.props.Location = new System.Drawing.Point(0, 0);
       this.props.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
       this.props.Name = "props";
-      this.props.Size = new System.Drawing.Size(772, 210);
+      this.props.Size = new System.Drawing.Size(760, 210);
       this.props.TabIndex = 1;
       // 
       // 
@@ -416,7 +417,7 @@
       this.props.ToolStrip.Location = new System.Drawing.Point(0, 1);
       this.props.ToolStrip.Name = "";
       this.props.ToolStrip.Padding = new System.Windows.Forms.Padding(21, 0, 14, 0);
-      this.props.ToolStrip.Size = new System.Drawing.Size(772, 31);
+      this.props.ToolStrip.Size = new System.Drawing.Size(760, 31);
       this.props.ToolStrip.TabIndex = 1;
       this.props.ToolStrip.TabStop = true;
       this.props.ToolStrip.Text = "PropertyGridToolBar";
@@ -436,8 +437,8 @@
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.tabControl2);
-      this.splitContainer1.Size = new System.Drawing.Size(772, 536);
-      this.splitContainer1.SplitterDistance = 257;
+      this.splitContainer1.Size = new System.Drawing.Size(760, 536);
+      this.splitContainer1.SplitterDistance = 253;
       this.splitContainer1.TabIndex = 3;
       // 
       // tabControl2
@@ -449,7 +450,7 @@
       this.tabControl2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabControl2.Name = "tabControl2";
       this.tabControl2.SelectedIndex = 0;
-      this.tabControl2.Size = new System.Drawing.Size(511, 536);
+      this.tabControl2.Size = new System.Drawing.Size(503, 536);
       this.tabControl2.TabIndex = 4;
       this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
       // 
@@ -460,7 +461,7 @@
       this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabPage3.Name = "tabPage3";
       this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.tabPage3.Size = new System.Drawing.Size(503, 500);
+      this.tabPage3.Size = new System.Drawing.Size(495, 500);
       this.tabPage3.TabIndex = 0;
       this.tabPage3.Text = "Ouput";
       this.tabPage3.UseVisualStyleBackColor = true;
@@ -497,7 +498,7 @@
       this.edOutput.RightBracket = ')';
       this.edOutput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
       this.edOutput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("edOutput.ServiceColors")));
-      this.edOutput.Size = new System.Drawing.Size(497, 492);
+      this.edOutput.Size = new System.Drawing.Size(489, 492);
       this.edOutput.TabIndex = 0;
       this.edOutput.WordWrap = true;
       this.edOutput.Zoom = 100;
@@ -564,9 +565,10 @@
       this.tvBuilder.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tvBuilder.Name = "tvBuilder";
       this.tvBuilder.SelectedImageIndex = 0;
-      this.tvBuilder.Size = new System.Drawing.Size(257, 587);
+      this.tvBuilder.Size = new System.Drawing.Size(253, 587);
       this.tvBuilder.TabIndex = 3;
       this.tvBuilder.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvBuilder_BeforeExpand);
+      this.tvBuilder.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvBuilder_ItemDrag);
       this.tvBuilder.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvBuilder_AfterSelect);
       this.tvBuilder.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvBuilder_DragDrop);
       this.tvBuilder.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvBuilder_DragEnter);
@@ -579,58 +581,24 @@
       this.panel2.Location = new System.Drawing.Point(0, 0);
       this.panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(257, 28);
+      this.panel2.Size = new System.Drawing.Size(253, 28);
       this.panel2.TabIndex = 4;
       // 
       // parseToolStripMenuItem
       // 
       this.parseToolStripMenuItem.Name = "parseToolStripMenuItem";
-      this.parseToolStripMenuItem.Size = new System.Drawing.Size(112, 24);
-      this.parseToolStripMenuItem.Text = "Parse";
-      this.parseToolStripMenuItem.Click += new System.EventHandler(this.btnInput_Click);
+      this.parseToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.parseToolStripMenuItem.Text = "Parse Input";
+      this.parseToolStripMenuItem.Click += new System.EventHandler(this.btnParse_Click);
       // 
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(17, 19);
+      this.label3.Location = new System.Drawing.Point(89, 19);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(55, 23);
       this.label3.TabIndex = 3;
       this.label3.Text = "label3";
-      // 
-      // btnPaste
-      // 
-      this.btnPaste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnPaste.Location = new System.Drawing.Point(160, 11);
-      this.btnPaste.Name = "btnPaste";
-      this.btnPaste.Size = new System.Drawing.Size(69, 39);
-      this.btnPaste.TabIndex = 5;
-      this.btnPaste.Text = "Paste";
-      this.btnPaste.UseVisualStyleBackColor = true;
-      this.btnPaste.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
-      // 
-      // btnClear
-      // 
-      this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnClear.Location = new System.Drawing.Point(78, 12);
-      this.btnClear.Name = "btnClear";
-      this.btnClear.Size = new System.Drawing.Size(77, 38);
-      this.btnClear.TabIndex = 4;
-      this.btnClear.Text = "Clear";
-      this.btnClear.UseVisualStyleBackColor = true;
-      this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-      // 
-      // btnInput
-      // 
-      this.btnInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnInput.Location = new System.Drawing.Point(3, 12);
-      this.btnInput.Name = "btnInput";
-      this.btnInput.Size = new System.Drawing.Size(69, 39);
-      this.btnInput.TabIndex = 3;
-      this.btnInput.Text = "Parse";
-      this.btnInput.UseVisualStyleBackColor = true;
-      this.btnInput.Visible = false;
-      this.btnInput.Click += new System.EventHandler(this.btnInput_Click);
       // 
       // cbPrompt
       // 
@@ -644,11 +612,54 @@
       this.cbPrompt.Text = "Generate Prompt";
       this.cbPrompt.UseVisualStyleBackColor = true;
       // 
+      // label4
+      // 
+      this.label4.AutoSize = true;
+      this.label4.Location = new System.Drawing.Point(16, 19);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(76, 23);
+      this.label4.TabIndex = 4;
+      this.label4.Text = "Focused:";
+      // 
+      // btnParse
+      // 
+      this.btnParse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnParse.Location = new System.Drawing.Point(693, 12);
+      this.btnParse.Name = "btnParse";
+      this.btnParse.Size = new System.Drawing.Size(60, 39);
+      this.btnParse.TabIndex = 5;
+      this.btnParse.Text = "Parse";
+      this.btnParse.UseVisualStyleBackColor = true;
+      this.btnParse.Visible = false;
+      this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
+      // 
+      // btnPaste
+      // 
+      this.btnPaste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnPaste.Location = new System.Drawing.Point(618, 12);
+      this.btnPaste.Name = "btnPaste";
+      this.btnPaste.Size = new System.Drawing.Size(69, 39);
+      this.btnPaste.TabIndex = 6;
+      this.btnPaste.Text = "Paste";
+      this.btnPaste.UseVisualStyleBackColor = true;
+      this.btnPaste.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+      // 
+      // btnClear
+      // 
+      this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnClear.Location = new System.Drawing.Point(535, 12);
+      this.btnClear.Name = "btnClear";
+      this.btnClear.Size = new System.Drawing.Size(77, 38);
+      this.btnClear.TabIndex = 7;
+      this.btnClear.Text = "Clear";
+      this.btnClear.UseVisualStyleBackColor = true;
+      this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1022, 854);
+      this.ClientSize = new System.Drawing.Size(1007, 854);
       this.Controls.Add(this.tabControl1);
       this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -665,7 +676,6 @@
       this.scRoot.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.scRoot)).EndInit();
       this.scRoot.ResumeLayout(false);
-      this.panel1.ResumeLayout(false);
       this.scRoot2.Panel1.ResumeLayout(false);
       this.scRoot2.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.scRoot2)).EndInit();
@@ -726,10 +736,11 @@
     private FastColoredTextBoxNS.FastColoredTextBox edInput;
     private System.Windows.Forms.ToolStripMenuItem parseToolStripMenuItem;
     private System.Windows.Forms.Label label3;
-    private System.Windows.Forms.Button btnPaste;
-    private System.Windows.Forms.Button btnClear;
-    private System.Windows.Forms.Button btnInput;
     private System.Windows.Forms.CheckBox cbPrompt;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.Button btnParse;
+    private System.Windows.Forms.Button btnClear;
+    private System.Windows.Forms.Button btnPaste;
   }
 }
 
