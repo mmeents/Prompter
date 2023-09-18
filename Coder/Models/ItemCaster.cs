@@ -122,12 +122,21 @@ namespace Prompter.Models {
       }
     }
 
-    public void LoadTreeviewItemsAsync(System.Windows.Forms.TreeView ownerItem) {      
+    public void LoadTreeviewItemsAsync(System.Windows.Forms.TreeView ownerItem, ProgressBar pb) {      
       ownerItem.Nodes.Clear();
-      IEnumerable<Item> result = _items.GetChildrenItems(0);      
+      decimal step = (pb.Maximum - pb.Value - 1); 
+      IEnumerable<Item> result = _items.GetChildrenItems(0);
+      int rc = result.Count();
+      step = (rc==0 ? step : ( rc < step ?  step / rc : 1 ));
       foreach(Item item in result) {
         ownerItem.Nodes.Add(LoadChildren(item));
+        if (pb.Value +Convert.ToInt32(step) < pb.Maximum) {
+          pb.Value=pb.Value+Convert.ToInt32(step);
+        }         
       }
+      if (pb.Value +Convert.ToInt32(step) < pb.Maximum) {
+          pb.Value=pb.Value+Convert.ToInt32(step);
+        }
     }
 
     public Item LoadChildren(Item item) {
@@ -172,6 +181,7 @@ namespace Prompter.Models {
       }
       _items[item.Id] = item;
       _cryptoVars[item.Id.AsString()].Value = item.AsChunk();
+      item.Dirty=false;
       return item;
     }
 

@@ -5,16 +5,27 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prompter", "Coder\Prompter.csproj", "{DD3E6F4C-042E-4511-929D-4477727CC879}"
 EndProject
+Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Install", "Installer\Install\Install.aiproj", "{1B5335C3-47FD-4580-9D31-056F6A4795EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		All|Any CPU = All|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD3E6F4C-042E-4511-929D-4477727CC879}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{DD3E6F4C-042E-4511-929D-4477727CC879}.All|Any CPU.Build.0 = Release|Any CPU
 		{DD3E6F4C-042E-4511-929D-4477727CC879}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD3E6F4C-042E-4511-929D-4477727CC879}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD3E6F4C-042E-4511-929D-4477727CC879}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD3E6F4C-042E-4511-929D-4477727CC879}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B5335C3-47FD-4580-9D31-056F6A4795EE}.All|Any CPU.ActiveCfg = DefaultBuild
+		{1B5335C3-47FD-4580-9D31-056F6A4795EE}.All|Any CPU.Build.0 = DefaultBuild
+		{1B5335C3-47FD-4580-9D31-056F6A4795EE}.Debug|Any CPU.ActiveCfg = DefaultBuild
+		{1B5335C3-47FD-4580-9D31-056F6A4795EE}.Debug|Any CPU.Build.0 = DefaultBuild
+		{1B5335C3-47FD-4580-9D31-056F6A4795EE}.Release|Any CPU.ActiveCfg = DefaultBuild
+		{1B5335C3-47FD-4580-9D31-056F6A4795EE}.Release|Any CPU.Build.0 = DefaultBuild
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

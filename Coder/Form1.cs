@@ -13,20 +13,35 @@ using System.Runtime.InteropServices;
 using PropertyGridEx;
 using static System.Net.Mime.MediaTypeNames;
 using FastColoredTextBoxNS;
+using System.Net;
 
 namespace Prompter {
   public partial class Form1:Form {
-
+    private const string _defaultUrl = "https://mmeents.github.io/files/PrompterV101.cdf";
+    private const string _defaultDir = "C:\\ProgramData\\MMCommons";
+    private const string _defaultFile = "C:\\ProgramData\\MMCommons\\PrompterV102.cdf";
+    private const string _defaultSettings = "C:\\ProgramData\\MMCommons\\PrompterSettings.var";
     private string _fileName;
     private string _folder;
     private CryptoKey _key;
     private Types _types;
     private ItemCaster _itemCaster;
     private Item _inEditItem = null;
+    private Variables _variables;
     public Form1() {
       InitializeComponent();
     }
-
+    private void Form1_Shown(object sender, EventArgs e) {
+      label3.Text ="if empty drag over a project first. Select item to focus.";
+      _variables = new Variables();
+      _variables.FileName = _defaultSettings;
+      string MRUL = _variables["FileNames"].Value;
+      if ( MRUL == "" ) MRUL = _defaultFile;       
+      edFileName.Items.Clear();
+      edFileName.Items.AddRange(MRUL.Parse(Environment.NewLine));
+      edFileName.Text = MRUL.ParseFirst(Environment.NewLine);
+      Form1_Resize(null, null);
+    }
     private void logMsg(string msg) { 
       if (!edError.Visible) edError.Visible = true;
       edError.Text = msg+ Environment.NewLine+ edError.Text;
@@ -37,6 +52,17 @@ namespace Prompter {
           _fileName = edFileName.Text;
           int fnl = _fileName.ParseLast("\\").Length + 1;
           _folder = _fileName.Substring(0, _fileName.Length - fnl);
+
+          if(!File.Exists(edFileName.Text)) {
+            if(!Directory.Exists(_defaultDir)) {
+              Directory.CreateDirectory(_defaultDir);
+            }
+            if(edFileName.Text == _defaultFile) { 
+              WebClient client = new WebClient();
+              client.DownloadFile(_defaultUrl, _defaultFile);
+            }
+          }
+
           string pw = edPassword.Text;
           _key = new CryptoKey();
           _key.SetCryptoKey(pw);      
@@ -48,11 +74,28 @@ namespace Prompter {
         }
       }
     }
+
+    public void SetInProgress(int ProgressPercent) { 
+      if (ProgressPercent == 0) {
+        pbMain.Visible = false;        
+        if (!tvTools.Enabled) tvTools.Enabled = true;
+        if (!tvBuilder.Enabled) tvBuilder.Enabled=true;
+        if (!props.Enabled) props.Enabled = true;        
+      } else { 
+        pbMain.Visible = true;        
+        if(!tvTools.Enabled) tvTools.Enabled=false;
+        if(!tvBuilder.Enabled) tvBuilder.Enabled=false;
+        if(!props.Enabled) props.Enabled=false;
+      }
+      pbMain.Value = ProgressPercent;      
+    }
     private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
       this.Text = (tabControl1.SelectedIndex == 0) ? "Prompter Setup":$"Prompter {_fileName}";
       if (tabControl1.SelectedIndex == 1) {
+        SetInProgress(2000);
         LoadtvTools();
-        _itemCaster.LoadTreeviewItemsAsync(tvBuilder);
+        _itemCaster.LoadTreeviewItemsAsync(tvBuilder, pbMain);
+        SetInProgress(0);
       }      
     }
 
@@ -67,7 +110,7 @@ namespace Prompter {
       tvTools.Nodes.Add(_types[23]);
     }
 
-    private void button1_Click(object sender, EventArgs e) {
+    private void btnBrowse_Click(object sender, EventArgs e) {
       if (edFileName.Text == "") { 
         odMain.InitialDirectory = Ext.MMCommonsFolder();
       } else {
@@ -76,11 +119,13 @@ namespace Prompter {
       }
       DialogResult res = odMain.ShowDialog();
       if (res == DialogResult.OK) {
+        _variables["FileNames"].Value = odMain.FileName+Environment.NewLine+ _variables["FileNames"].Value;
+        edFileName.Text = odMain.FileName;
         edFileName.Text = odMain.FileName;
       }
     }
 
-    private void button2_Click(object sender, EventArgs e) {
+    private void btnBuildOpen_Click(object sender, EventArgs e) {
       tabControl1.SelectedIndex=1;
     }
 
@@ -163,61 +208,88 @@ namespace Prompter {
     }
 
     private void tvBuilder_DragDrop(object sender, DragEventArgs e) {
-      Point targetPt = tvBuilder.PointToClient(new Point(e.X, e.Y));
-      Item tn = (Item)tvBuilder.GetNodeAt(targetPt);
-      if(tn!=null&&e.Data!=null) {
+      try { 
+        Point targetPt = tvBuilder.PointToClient(new Point(e.X, e.Y));
+        Item tn = (Item)tvBuilder.GetNodeAt(targetPt);
+        SetInProgress(9500);
+        if(tn!=null&&e.Data!=null) {
 
-        ItemType draggedNode = (ItemType)e.Data.GetData(typeof(ItemType));
-        if (draggedNode !=null) { 
-          if        (draggedNode.TypeId==(int)TnType.Template&& (tn.TypeId==(int)TnType.Project||tn.TypeId==(int)TnType.Template)) {
-            var nn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
-          } else if((draggedNode.TypeId==(int)TnType.SubSection)&&(tn.TypeId==(int)TnType.Section||tn.TypeId == (int)TnType.SubSection)) {
-            var nn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
-          } else if((draggedNode.TypeId==(int)TnType.Section&&tn.TypeId==(int)TnType.Chapter)) {
-            var fnn=_itemCaster.SaveNewItemFromType(tn, draggedNode);
-          } else if((draggedNode.TypeId==(int)TnType.Chapters&&tn.TypeId==(int)TnType.Project)) {
-            var fnn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
-          } else if((draggedNode.TypeId==(int)TnType.Chapter&&tn.TypeId==(int)TnType.Chapters)) {
-            var fnn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+          ItemType draggedNode = (ItemType)e.Data.GetData(typeof(ItemType));
+          if (draggedNode !=null) { 
+            if        (draggedNode.TypeId==(int)TnType.Template&& (tn.TypeId==(int)TnType.Project||tn.TypeId==(int)TnType.Template)) {
+              var nn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+            } else if((draggedNode.TypeId==(int)TnType.SubSection)&&(tn.TypeId==(int)TnType.Section||tn.TypeId == (int)TnType.SubSection)) {
+              var nn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+            } else if((draggedNode.TypeId==(int)TnType.Section&&tn.TypeId==(int)TnType.Chapter)) {
+              var fnn=_itemCaster.SaveNewItemFromType(tn, draggedNode);
+            } else if((draggedNode.TypeId==(int)TnType.Chapters&&tn.TypeId==(int)TnType.Project)) {
+              var fnn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+            } else if((draggedNode.TypeId==(int)TnType.Chapter&&tn.TypeId==(int)TnType.Chapters)) {
+              var fnn = _itemCaster.SaveNewItemFromType(tn, draggedNode);
+            }
+          } else {
+
+            Item dragNode = (Item)e.Data.GetData(typeof(Item));
+            if(dragNode!=null) {
+              if(dragNode.TypeId==(int)TnType.Template&&(tn.TypeId==(int)TnType.Project||tn.TypeId==(int)TnType.Template)) {
+                var nn = _itemCaster.MoveItemSave(tn, dragNode);
+              } else if((dragNode.TypeId==(int)TnType.SubSection)&&(tn.TypeId==(int)TnType.Section||tn.TypeId==(int)TnType.SubSection)) {
+                var nn = _itemCaster.MoveItemSave(tn, dragNode);
+              } else if((dragNode.TypeId==(int)TnType.Section&&tn.TypeId==(int)TnType.Chapter)) {
+                var fnn = _itemCaster.MoveItemSave(tn, dragNode);
+              } else if((dragNode.TypeId==(int)TnType.Chapters&&tn.TypeId==(int)TnType.Project)) {
+                var fnn = _itemCaster.MoveItemSave(tn, dragNode);
+              } else if((dragNode.TypeId==(int)TnType.Chapter&&tn.TypeId==(int)TnType.Chapters)) {
+                var fnn = _itemCaster.MoveItemSave(tn, dragNode);
+              }
+            } 
+
           }
         } else {
-
-          Item dragNode = (Item)e.Data.GetData(typeof(Item));
-          if(dragNode!=null) {
-            if(dragNode.TypeId==(int)TnType.Template&&(tn.TypeId==(int)TnType.Project||tn.TypeId==(int)TnType.Template)) {
-              var nn = _itemCaster.MoveItemSave(tn, dragNode);
-            } else if((dragNode.TypeId==(int)TnType.SubSection)&&(tn.TypeId==(int)TnType.Section||tn.TypeId==(int)TnType.SubSection)) {
-              var nn = _itemCaster.MoveItemSave(tn, dragNode);
-            } else if((dragNode.TypeId==(int)TnType.Section&&tn.TypeId==(int)TnType.Chapter)) {
-              var fnn = _itemCaster.MoveItemSave(tn, dragNode);
-            } else if((dragNode.TypeId==(int)TnType.Chapters&&tn.TypeId==(int)TnType.Project)) {
-              var fnn = _itemCaster.MoveItemSave(tn, dragNode);
-            } else if((dragNode.TypeId==(int)TnType.Chapter&&tn.TypeId==(int)TnType.Chapters)) {
-              var fnn = _itemCaster.MoveItemSave(tn, dragNode);
-            }
-          } 
-
+          if(e.Data!=null) {
+            ItemType draggedNode = (ItemType)e.Data.GetData(typeof(ItemType));
+            if(draggedNode!=null) {
+              if(draggedNode.TypeId==(int)TnType.Project) {
+                var newItem = _itemCaster.SaveNewItemFromType(null, draggedNode);
+                tvBuilder.Nodes.Add(newItem);
+              }
+            } 
+          }
         }
-      } else {
-        if(e.Data!=null) {
-          ItemType draggedNode = (ItemType)e.Data.GetData(typeof(ItemType));
-          if(draggedNode!=null) {
-            if(draggedNode.TypeId==(int)TnType.Project) {
-              var newItem = _itemCaster.SaveNewItemFromType(null, draggedNode);
-              tvBuilder.Nodes.Add(newItem);
-            }
-          } 
-        }
+      } finally {
+        SetInProgress(0);
       }
     }
 
     private void tvBuilder_AfterSelect(object sender, TreeViewEventArgs e) {
+      try { 
       if(e?.Node==null) return;
       _inEditItem=(Item)e.Node;
-      if(_inEditItem==null) return;      
-      ResetPropEditors(_inEditItem);
+      if(_inEditItem==null) return;
+        SetInProgress(9500);
+        ResetPropEditors(_inEditItem);
+      } finally {
+        SetInProgress(0);
+      }
     }
 
+    private void tvBuilder_AfterLabelEdit(object sender, NodeLabelEditEventArgs e) {
+      try {         
+        if (_inEditItem !=(Item)e.Node) { 
+          _inEditItem = (Item)e.Node;
+        }
+        if (_inEditItem==null || e.Label==null) {
+          e.CancelEdit = true;
+          return;
+        }
+        if (_inEditItem.Text != e.Label) { _inEditItem.Text = e.Label; }
+        if (_inEditItem.Dirty) _itemCaster.SaveItem(_inEditItem);
+          SetInProgress(9500);
+          ResetPropEditors(_inEditItem);
+      } finally {
+        SetInProgress(0);
+      }
+    }
     private void ResetPropEditors(Item item) {
       props.SelectedObject=item;
       props.ShowCustomProperties=true;
@@ -241,10 +313,11 @@ namespace Prompter {
           Name="Prompt", Category=itCat.Text, Description=it.Desc, Value=_types[item.ValueTypeId].Name,
           DisplayMember="Text", ValueMember="TypeId", Datasource=al, Visible=true, IsReadOnly=false, IsDropdownResizable=true
         };
-        props.Item.Add(customProperty);
+        props.Item.Add(customProperty);        
       }     
 
       props.Refresh();
+      props.MoveSplitterTo(Convert.ToInt32( props.Width * 0.2));
 
       if(_inEditItem != null) {         
         PopulateEditors(_inEditItem);        
@@ -265,14 +338,26 @@ namespace Prompter {
           }
         }
         if(_inEditItem.Dirty) {
-          _itemCaster.SaveItem( _inEditItem );          
-          PopulateEditors(_inEditItem);          
+          try {
+            SetInProgress(9500);
+            _itemCaster.SaveItem( _inEditItem );          
+            PopulateEditors(_inEditItem);          
+          } finally {
+            SetInProgress(0);
+          }
         }
       }
     }
 
     private void contextMenuStrip1_Opening(object sender, CancelEventArgs e) {
-      if (_inEditItem == null) { e.Cancel = true; return; }      
+      if (_inEditItem == null) { 
+        saveToolStripMenuItem.Enabled = false;
+        deleteToolStripMenuItem.Enabled= false;
+        moveUpToolStripMenuItem.Enabled = false;
+        moveDownToolStripMenuItem.Enabled = false;
+        e.Cancel = true; 
+        return; 
+      }      
       if (_inEditItem.Dirty ) {
         saveToolStripMenuItem.Enabled = true;
       } else { 
@@ -283,18 +368,42 @@ namespace Prompter {
       } else {  
         deleteToolStripMenuItem.Enabled = false; 
       }
+      if ( _inEditItem.PrevVisibleNode ==null) {
+        moveUpToolStripMenuItem.Enabled= false;
+      } else {
+        moveUpToolStripMenuItem.Enabled = true;
+      }
+      if(_inEditItem.NextVisibleNode==null) {
+        moveDownToolStripMenuItem.Enabled= false;
+      } else {
+        moveDownToolStripMenuItem.Enabled=true;
+      }
     }
 
     private void deleteToolStripMenuItem_Click(object sender, EventArgs e) {
       if(_inEditItem==null) return;
-      Item item = _inEditItem;
-      //DialogResult dr = MessageBox.Show($"Delete {item.Text} ", "Confirm Delete", MessageBoxButtons.OKCancel);
-      //if(dr==DialogResult.OK) {
-        Item ParentItem = (Item)item.Parent;        
+      try { 
+        Item item = _inEditItem;      
+        Item ParentItem = (Item)item.Parent;
+        SetInProgress(9500);
         ParentItem.Nodes.Remove(item);
         _itemCaster.RemoveItem(item);
         tvBuilder.SelectedNode=ParentItem;
-      //}
+      } finally {
+        SetInProgress(0);
+      }
+    }
+
+    private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
+      if(_inEditItem==null) return;      
+      if(_inEditItem.Dirty) {
+        try {
+          SetInProgress(9500);
+          _itemCaster.SaveItem(_inEditItem);
+        } finally {
+          SetInProgress(0);
+        }
+      }
     }
 
     private void btnClear_Click(object sender, EventArgs e) {
@@ -324,16 +433,21 @@ namespace Prompter {
 
     private void btnParse_Click(object sender, EventArgs e) {
       if(_inEditItem==null) { return; }
-      string content = edInput.Text;
-      int dropTypeId = _inEditItem.TypeId;
-      if(dropTypeId==(int)TnType.Project||dropTypeId==(int)TnType.Template) {
-        _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Template], content);
-      } else if(dropTypeId==(int)TnType.Chapters) {
-        _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Chapter], content);
-      } else if(dropTypeId==(int)TnType.Chapter) {
-        _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Section], content);
-      } else if(dropTypeId==(int)TnType.Section||dropTypeId==(int)TnType.SubSection) {
-        _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.SubSection], content);
+      try { 
+        string content = edInput.Text;
+        int dropTypeId = _inEditItem.TypeId;
+        SetInProgress(9500);
+        if(dropTypeId==(int)TnType.Project||dropTypeId==(int)TnType.Template) {
+          _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Template], content);
+        } else if(dropTypeId==(int)TnType.Chapters) {
+          _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Chapter], content);
+        } else if(dropTypeId==(int)TnType.Chapter) {
+          _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Section], content);
+        } else if(dropTypeId==(int)TnType.Section||dropTypeId==(int)TnType.SubSection) {
+          _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.SubSection], content);
+        }
+      } finally{
+        SetInProgress(0);
       }
     }
 
@@ -366,13 +480,19 @@ namespace Prompter {
       ResetbtnInputVisibility();
     }
 
+    private void addTemplateToolStripMenuItem_Click(object sender, EventArgs e) {
+      if(_inEditItem==null) { return; }      
+      _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Template], "Template");      
+    }
+
+
     private void ProcessEditOut(Item it) {
       if (cbPrompt.Checked &&it.ValueTypeId>0) { 
         string promptTemplate = _types[it.ValueTypeId].Desc;
         if (promptTemplate ==String.Empty && it.ValueTypeId==47) {  // 47 is current node is template.
           promptTemplate = it.Text;
         }
-        string GrandParent="", Parent="", Node = "";
+        string GrandParent="", Parent="";
         if(it.OwnerId>0) {
           if(it.Parent!=null) {
             Parent= it.Parent.Text;
@@ -394,7 +514,7 @@ namespace Prompter {
         }      
         string tag = "";
         foreach(Item c in it.Nodes) {
-          if (c.ValueTypeId !=47) {  // templates dont print here.
+          if (c.ValueTypeId !=47 && c.Text.Length > 0) {  // templates dont print here.
             string childContent = GetChildContent(c);
             if(c.Text[0]=='[') {
               tag = c.Text.Insert(1,"/");          
@@ -421,14 +541,12 @@ namespace Prompter {
       tvBuilder.Height = splitContainer1.Height - panel2.Height - 2;
     }
 
-    private void Form1_Shown(object sender, EventArgs e) {
-      Form1_Resize(null, null);
-    }
+
 
     private void scRoot2_SplitterMoved(object sender, SplitterEventArgs e) {
       tvBuilder.Height=splitContainer1.Height-panel2.Height-2;
     }
 
-
+    
   }
 }

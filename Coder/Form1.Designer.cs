@@ -27,44 +27,48 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
+      this.edFileName = new System.Windows.Forms.ComboBox();
       this.edError = new System.Windows.Forms.TextBox();
-      this.button2 = new System.Windows.Forms.Button();
+      this.btnBuild = new System.Windows.Forms.Button();
       this.button1 = new System.Windows.Forms.Button();
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.edPassword = new System.Windows.Forms.TextBox();
-      this.edFileName = new System.Windows.Forms.TextBox();
       this.tabPage2 = new System.Windows.Forms.TabPage();
       this.scRoot = new System.Windows.Forms.SplitContainer();
       this.tvTools = new System.Windows.Forms.TreeView();
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.panel1 = new System.Windows.Forms.Panel();
+      this.cbPrompt = new System.Windows.Forms.CheckBox();
       this.scRoot2 = new System.Windows.Forms.SplitContainer();
+      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.panel2 = new System.Windows.Forms.Panel();
+      this.pbMain = new System.Windows.Forms.ProgressBar();
+      this.tvBuilder = new System.Windows.Forms.TreeView();
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.addTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.tabControl2 = new System.Windows.Forms.TabControl();
+      this.tabPage3 = new System.Windows.Forms.TabPage();
+      this.edOutput = new FastColoredTextBoxNS.FastColoredTextBox();
       this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.odMain = new System.Windows.Forms.OpenFileDialog();
-      this.panel3 = new System.Windows.Forms.Panel();
-      this.props = new PropertyGridEx.PropertyGridEx();
-      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-      this.tabControl2 = new System.Windows.Forms.TabControl();
-      this.tabPage3 = new System.Windows.Forms.TabPage();
-      this.edOutput = new FastColoredTextBoxNS.FastColoredTextBox();
+      this.parseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabPage4 = new System.Windows.Forms.TabPage();
       this.edInput = new FastColoredTextBoxNS.FastColoredTextBox();
-      this.tvBuilder = new System.Windows.Forms.TreeView();
-      this.panel2 = new System.Windows.Forms.Panel();
-      this.parseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.label3 = new System.Windows.Forms.Label();
-      this.cbPrompt = new System.Windows.Forms.CheckBox();
-      this.label4 = new System.Windows.Forms.Label();
-      this.btnParse = new System.Windows.Forms.Button();
-      this.btnPaste = new System.Windows.Forms.Button();
+      this.panel3 = new System.Windows.Forms.Panel();
       this.btnClear = new System.Windows.Forms.Button();
+      this.btnPaste = new System.Windows.Forms.Button();
+      this.btnParse = new System.Windows.Forms.Button();
+      this.label4 = new System.Windows.Forms.Label();
+      this.label3 = new System.Windows.Forms.Label();
+      this.props = new PropertyGridEx.PropertyGridEx();
+      this.odMain = new System.Windows.Forms.OpenFileDialog();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.tabPage2.SuspendLayout();
@@ -72,23 +76,24 @@
       this.scRoot.Panel1.SuspendLayout();
       this.scRoot.Panel2.SuspendLayout();
       this.scRoot.SuspendLayout();
+      this.panel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.scRoot2)).BeginInit();
       this.scRoot2.Panel1.SuspendLayout();
       this.scRoot2.Panel2.SuspendLayout();
       this.scRoot2.SuspendLayout();
-      this.contextMenuStrip1.SuspendLayout();
-      this.contextMenuStrip2.SuspendLayout();
-      this.panel3.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
+      this.panel2.SuspendLayout();
+      this.contextMenuStrip1.SuspendLayout();
       this.tabControl2.SuspendLayout();
       this.tabPage3.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.edOutput)).BeginInit();
+      this.contextMenuStrip2.SuspendLayout();
       this.tabPage4.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.edInput)).BeginInit();
-      this.panel2.SuspendLayout();
+      this.panel3.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControl1
@@ -107,21 +112,30 @@
       // 
       // tabPage1
       // 
+      this.tabPage1.Controls.Add(this.edFileName);
       this.tabPage1.Controls.Add(this.edError);
-      this.tabPage1.Controls.Add(this.button2);
+      this.tabPage1.Controls.Add(this.btnBuild);
       this.tabPage1.Controls.Add(this.button1);
       this.tabPage1.Controls.Add(this.label2);
       this.tabPage1.Controls.Add(this.label1);
       this.tabPage1.Controls.Add(this.edPassword);
-      this.tabPage1.Controls.Add(this.edFileName);
       this.tabPage1.Location = new System.Drawing.Point(4, 32);
       this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabPage1.Name = "tabPage1";
       this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.tabPage1.Size = new System.Drawing.Size(1012, 923);
+      this.tabPage1.Size = new System.Drawing.Size(999, 818);
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "Setup";
       this.tabPage1.UseVisualStyleBackColor = true;
+      // 
+      // edFileName
+      // 
+      this.edFileName.FormattingEnabled = true;
+      this.edFileName.Location = new System.Drawing.Point(205, 54);
+      this.edFileName.Name = "edFileName";
+      this.edFileName.Size = new System.Drawing.Size(625, 31);
+      this.edFileName.TabIndex = 7;
+      this.edFileName.Text = "C:\\ProgramData\\MMCommons\\PrompterV101.cdf";
       // 
       // edError
       // 
@@ -133,19 +147,19 @@
       this.edError.Visible = false;
       this.edError.WordWrap = false;
       // 
-      // button2
+      // btnBuild
       // 
-      this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-      this.button2.FlatAppearance.BorderColor = System.Drawing.Color.DodgerBlue;
-      this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Cyan;
-      this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Teal;
-      this.button2.Location = new System.Drawing.Point(376, 276);
-      this.button2.Name = "button2";
-      this.button2.Size = new System.Drawing.Size(111, 45);
-      this.button2.TabIndex = 5;
-      this.button2.Text = "Open";
-      this.button2.UseVisualStyleBackColor = false;
-      this.button2.Click += new System.EventHandler(this.button2_Click);
+      this.btnBuild.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+      this.btnBuild.FlatAppearance.BorderColor = System.Drawing.Color.DodgerBlue;
+      this.btnBuild.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Cyan;
+      this.btnBuild.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Teal;
+      this.btnBuild.Location = new System.Drawing.Point(376, 276);
+      this.btnBuild.Name = "btnBuild";
+      this.btnBuild.Size = new System.Drawing.Size(111, 45);
+      this.btnBuild.TabIndex = 5;
+      this.btnBuild.Text = "Open File";
+      this.btnBuild.UseVisualStyleBackColor = false;
+      this.btnBuild.Click += new System.EventHandler(this.btnBuildOpen_Click);
       // 
       // button1
       // 
@@ -153,13 +167,13 @@
       this.button1.FlatAppearance.BorderColor = System.Drawing.Color.DodgerBlue;
       this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Cyan;
       this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Teal;
-      this.button1.Location = new System.Drawing.Point(836, 109);
+      this.button1.Location = new System.Drawing.Point(836, 55);
       this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(75, 30);
+      this.button1.Size = new System.Drawing.Size(109, 30);
       this.button1.TabIndex = 4;
-      this.button1.Text = "Open";
+      this.button1.Text = "Browse";
       this.button1.UseVisualStyleBackColor = false;
-      this.button1.Click += new System.EventHandler(this.button1_Click);
+      this.button1.Click += new System.EventHandler(this.btnBrowse_Click);
       // 
       // label2
       // 
@@ -173,11 +187,11 @@
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(68, 112);
+      this.label1.Location = new System.Drawing.Point(40, 57);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(131, 23);
+      this.label1.Size = new System.Drawing.Size(159, 23);
       this.label1.TabIndex = 2;
-      this.label1.Text = "Coder data file: ";
+      this.label1.Text = "Prompter Data file: ";
       // 
       // edPassword
       // 
@@ -187,15 +201,6 @@
       this.edPassword.Size = new System.Drawing.Size(163, 30);
       this.edPassword.TabIndex = 1;
       this.edPassword.Text = "mm";
-      // 
-      // edFileName
-      // 
-      this.edFileName.Location = new System.Drawing.Point(205, 109);
-      this.edFileName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.edFileName.Name = "edFileName";
-      this.edFileName.Size = new System.Drawing.Size(625, 30);
-      this.edFileName.TabIndex = 0;
-      this.edFileName.Text = "C:\\ProgramData\\MMCommons\\Prompter001.cdf";
       // 
       // tabPage2
       // 
@@ -270,12 +275,25 @@
       // 
       // panel1
       // 
+      this.panel1.Controls.Add(this.cbPrompt);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.panel1.Name = "panel1";
       this.panel1.Size = new System.Drawing.Size(229, 88);
       this.panel1.TabIndex = 0;
+      // 
+      // cbPrompt
+      // 
+      this.cbPrompt.AutoSize = true;
+      this.cbPrompt.Checked = true;
+      this.cbPrompt.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.cbPrompt.Location = new System.Drawing.Point(14, 15);
+      this.cbPrompt.Name = "cbPrompt";
+      this.cbPrompt.Size = new System.Drawing.Size(164, 27);
+      this.cbPrompt.TabIndex = 1;
+      this.cbPrompt.Text = "Generate Prompt";
+      this.cbPrompt.UseVisualStyleBackColor = true;
       // 
       // scRoot2
       // 
@@ -298,131 +316,6 @@
       this.scRoot2.TabIndex = 0;
       this.scRoot2.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.scRoot2_SplitterMoved);
       // 
-      // contextMenuStrip1
-      // 
-      this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-      this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteToolStripMenuItem,
-            this.saveToolStripMenuItem});
-      this.contextMenuStrip1.Name = "contextMenuStrip1";
-      this.contextMenuStrip1.Size = new System.Drawing.Size(123, 52);
-      this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
-      // 
-      // deleteToolStripMenuItem
-      // 
-      this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-      this.deleteToolStripMenuItem.Size = new System.Drawing.Size(122, 24);
-      this.deleteToolStripMenuItem.Text = "Delete";
-      this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-      // 
-      // saveToolStripMenuItem
-      // 
-      this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-      this.saveToolStripMenuItem.Size = new System.Drawing.Size(122, 24);
-      this.saveToolStripMenuItem.Text = "Save";
-      // 
-      // contextMenuStrip2
-      // 
-      this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
-      this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearToolStripMenuItem,
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem,
-            this.parseToolStripMenuItem});
-      this.contextMenuStrip2.Name = "contextMenuStrip2";
-      this.contextMenuStrip2.Size = new System.Drawing.Size(151, 100);
-      this.contextMenuStrip2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip2_Opening);
-      // 
-      // clearToolStripMenuItem
-      // 
-      this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-      this.clearToolStripMenuItem.Size = new System.Drawing.Size(112, 24);
-      this.clearToolStripMenuItem.Text = "Clear";
-      this.clearToolStripMenuItem.Click += new System.EventHandler(this.btnClear_Click);
-      // 
-      // copyToolStripMenuItem
-      // 
-      this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-      this.copyToolStripMenuItem.Size = new System.Drawing.Size(112, 24);
-      this.copyToolStripMenuItem.Text = "Copy";
-      this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-      // 
-      // pasteToolStripMenuItem
-      // 
-      this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-      this.pasteToolStripMenuItem.Size = new System.Drawing.Size(112, 24);
-      this.pasteToolStripMenuItem.Text = "Paste";
-      this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
-      // 
-      // odMain
-      // 
-      this.odMain.CheckFileExists = false;
-      this.odMain.DefaultExt = "cdf";
-      // 
-      // panel3
-      // 
-      this.panel3.Controls.Add(this.btnClear);
-      this.panel3.Controls.Add(this.btnPaste);
-      this.panel3.Controls.Add(this.btnParse);
-      this.panel3.Controls.Add(this.label4);
-      this.panel3.Controls.Add(this.label3);
-      this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-      this.panel3.Location = new System.Drawing.Point(0, 0);
-      this.panel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.panel3.Name = "panel3";
-      this.panel3.Size = new System.Drawing.Size(760, 60);
-      this.panel3.TabIndex = 2;
-      // 
-      // props
-      // 
-      // 
-      // 
-      // 
-      this.props.DocCommentDescription.AutoEllipsis = true;
-      this.props.DocCommentDescription.Cursor = System.Windows.Forms.Cursors.Default;
-      this.props.DocCommentDescription.Location = new System.Drawing.Point(4, 29);
-      this.props.DocCommentDescription.Margin = new System.Windows.Forms.Padding(32, 0, 32, 0);
-      this.props.DocCommentDescription.Name = "";
-      this.props.DocCommentDescription.Size = new System.Drawing.Size(752, 40);
-      this.props.DocCommentDescription.TabIndex = 1;
-      this.props.DocCommentImage = null;
-      // 
-      // 
-      // 
-      this.props.DocCommentTitle.Cursor = System.Windows.Forms.Cursors.Default;
-      this.props.DocCommentTitle.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
-      this.props.DocCommentTitle.Location = new System.Drawing.Point(4, 4);
-      this.props.DocCommentTitle.Margin = new System.Windows.Forms.Padding(32, 0, 32, 0);
-      this.props.DocCommentTitle.Name = "";
-      this.props.DocCommentTitle.Size = new System.Drawing.Size(752, 25);
-      this.props.DocCommentTitle.TabIndex = 0;
-      this.props.DocCommentTitle.UseMnemonic = false;
-      this.props.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.props.Location = new System.Drawing.Point(0, 0);
-      this.props.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-      this.props.Name = "props";
-      this.props.Size = new System.Drawing.Size(760, 210);
-      this.props.TabIndex = 1;
-      // 
-      // 
-      // 
-      this.props.ToolStrip.AccessibleName = "Property Grid";
-      this.props.ToolStrip.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
-      this.props.ToolStrip.AllowMerge = false;
-      this.props.ToolStrip.AutoSize = false;
-      this.props.ToolStrip.CanOverflow = false;
-      this.props.ToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-      this.props.ToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-      this.props.ToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-      this.props.ToolStrip.Location = new System.Drawing.Point(0, 1);
-      this.props.ToolStrip.Name = "";
-      this.props.ToolStrip.Padding = new System.Windows.Forms.Padding(21, 0, 14, 0);
-      this.props.ToolStrip.Size = new System.Drawing.Size(760, 31);
-      this.props.ToolStrip.TabIndex = 1;
-      this.props.ToolStrip.TabStop = true;
-      this.props.ToolStrip.Text = "PropertyGridToolBar";
-      this.props.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.props_PropertyValueChanged);
-      // 
       // splitContainer1
       // 
       this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -440,6 +333,95 @@
       this.splitContainer1.Size = new System.Drawing.Size(760, 536);
       this.splitContainer1.SplitterDistance = 253;
       this.splitContainer1.TabIndex = 3;
+      // 
+      // panel2
+      // 
+      this.panel2.Controls.Add(this.pbMain);
+      this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panel2.Location = new System.Drawing.Point(0, 0);
+      this.panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+      this.panel2.Name = "panel2";
+      this.panel2.Size = new System.Drawing.Size(253, 28);
+      this.panel2.TabIndex = 4;
+      // 
+      // pbMain
+      // 
+      this.pbMain.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.pbMain.ForeColor = System.Drawing.Color.Blue;
+      this.pbMain.Location = new System.Drawing.Point(0, 0);
+      this.pbMain.Maximum = 10000;
+      this.pbMain.Name = "pbMain";
+      this.pbMain.Size = new System.Drawing.Size(253, 28);
+      this.pbMain.TabIndex = 10;
+      this.pbMain.Value = 500;
+      // 
+      // tvBuilder
+      // 
+      this.tvBuilder.AllowDrop = true;
+      this.tvBuilder.ContextMenuStrip = this.contextMenuStrip1;
+      this.tvBuilder.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.tvBuilder.ImageIndex = 0;
+      this.tvBuilder.ImageList = this.imageList1;
+      this.tvBuilder.LabelEdit = true;
+      this.tvBuilder.Location = new System.Drawing.Point(0, -51);
+      this.tvBuilder.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+      this.tvBuilder.Name = "tvBuilder";
+      this.tvBuilder.SelectedImageIndex = 0;
+      this.tvBuilder.Size = new System.Drawing.Size(253, 587);
+      this.tvBuilder.TabIndex = 3;
+      this.tvBuilder.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.tvBuilder_AfterLabelEdit);
+      this.tvBuilder.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvBuilder_BeforeExpand);
+      this.tvBuilder.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvBuilder_ItemDrag);
+      this.tvBuilder.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvBuilder_AfterSelect);
+      this.tvBuilder.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvBuilder_DragDrop);
+      this.tvBuilder.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvBuilder_DragEnter);
+      this.tvBuilder.DragOver += new System.Windows.Forms.DragEventHandler(this.tvBuilder_DragOver);
+      // 
+      // contextMenuStrip1
+      // 
+      this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+      this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addTemplateToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.moveUpToolStripMenuItem,
+            this.moveDownToolStripMenuItem});
+      this.contextMenuStrip1.Name = "contextMenuStrip1";
+      this.contextMenuStrip1.Size = new System.Drawing.Size(173, 124);
+      this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+      // 
+      // addTemplateToolStripMenuItem
+      // 
+      this.addTemplateToolStripMenuItem.Name = "addTemplateToolStripMenuItem";
+      this.addTemplateToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
+      this.addTemplateToolStripMenuItem.Text = "Add Template";
+      this.addTemplateToolStripMenuItem.Click += new System.EventHandler(this.addTemplateToolStripMenuItem_Click);
+      // 
+      // deleteToolStripMenuItem
+      // 
+      this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+      this.deleteToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
+      this.deleteToolStripMenuItem.Text = "Delete";
+      this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+      // 
+      // saveToolStripMenuItem
+      // 
+      this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+      this.saveToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
+      this.saveToolStripMenuItem.Text = "Save";
+      this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+      // 
+      // moveUpToolStripMenuItem
+      // 
+      this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
+      this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
+      this.moveUpToolStripMenuItem.Text = "Move Up";
+      // 
+      // moveDownToolStripMenuItem
+      // 
+      this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
+      this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
+      this.moveDownToolStripMenuItem.Text = "Move Down";
       // 
       // tabControl2
       // 
@@ -503,14 +485,54 @@
       this.edOutput.WordWrap = true;
       this.edOutput.Zoom = 100;
       // 
+      // contextMenuStrip2
+      // 
+      this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
+      this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearToolStripMenuItem,
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.parseToolStripMenuItem});
+      this.contextMenuStrip2.Name = "contextMenuStrip2";
+      this.contextMenuStrip2.Size = new System.Drawing.Size(151, 100);
+      this.contextMenuStrip2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip2_Opening);
+      // 
+      // clearToolStripMenuItem
+      // 
+      this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+      this.clearToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.clearToolStripMenuItem.Text = "Clear";
+      this.clearToolStripMenuItem.Click += new System.EventHandler(this.btnClear_Click);
+      // 
+      // copyToolStripMenuItem
+      // 
+      this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+      this.copyToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.copyToolStripMenuItem.Text = "Copy";
+      this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+      // 
+      // pasteToolStripMenuItem
+      // 
+      this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+      this.pasteToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.pasteToolStripMenuItem.Text = "Paste";
+      this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+      // 
+      // parseToolStripMenuItem
+      // 
+      this.parseToolStripMenuItem.Name = "parseToolStripMenuItem";
+      this.parseToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.parseToolStripMenuItem.Text = "Parse Input";
+      this.parseToolStripMenuItem.Click += new System.EventHandler(this.btnParse_Click);
+      // 
       // tabPage4
       // 
       this.tabPage4.Controls.Add(this.edInput);
-      this.tabPage4.Location = new System.Drawing.Point(4, 32);
+      this.tabPage4.Location = new System.Drawing.Point(4, 25);
       this.tabPage4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabPage4.Name = "tabPage4";
       this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.tabPage4.Size = new System.Drawing.Size(758, 576);
+      this.tabPage4.Size = new System.Drawing.Size(495, 507);
       this.tabPage4.TabIndex = 1;
       this.tabPage4.Text = "Input";
       this.tabPage4.UseVisualStyleBackColor = true;
@@ -550,76 +572,45 @@
       this.edInput.RightBracket2 = '}';
       this.edInput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
       this.edInput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("edInput.ServiceColors")));
-      this.edInput.Size = new System.Drawing.Size(752, 568);
+      this.edInput.Size = new System.Drawing.Size(489, 499);
       this.edInput.TabIndex = 0;
       this.edInput.Zoom = 100;
       // 
-      // tvBuilder
+      // panel3
       // 
-      this.tvBuilder.AllowDrop = true;
-      this.tvBuilder.ContextMenuStrip = this.contextMenuStrip1;
-      this.tvBuilder.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.tvBuilder.ImageIndex = 0;
-      this.tvBuilder.ImageList = this.imageList1;
-      this.tvBuilder.Location = new System.Drawing.Point(0, -51);
-      this.tvBuilder.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.tvBuilder.Name = "tvBuilder";
-      this.tvBuilder.SelectedImageIndex = 0;
-      this.tvBuilder.Size = new System.Drawing.Size(253, 587);
-      this.tvBuilder.TabIndex = 3;
-      this.tvBuilder.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvBuilder_BeforeExpand);
-      this.tvBuilder.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvBuilder_ItemDrag);
-      this.tvBuilder.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvBuilder_AfterSelect);
-      this.tvBuilder.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvBuilder_DragDrop);
-      this.tvBuilder.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvBuilder_DragEnter);
-      this.tvBuilder.DragOver += new System.Windows.Forms.DragEventHandler(this.tvBuilder_DragOver);
+      this.panel3.Controls.Add(this.btnClear);
+      this.panel3.Controls.Add(this.btnPaste);
+      this.panel3.Controls.Add(this.btnParse);
+      this.panel3.Controls.Add(this.label4);
+      this.panel3.Controls.Add(this.label3);
+      this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panel3.Location = new System.Drawing.Point(0, 0);
+      this.panel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+      this.panel3.Name = "panel3";
+      this.panel3.Size = new System.Drawing.Size(760, 60);
+      this.panel3.TabIndex = 2;
       // 
-      // panel2
+      // btnClear
       // 
-      this.panel2.Controls.Add(this.cbPrompt);
-      this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-      this.panel2.Location = new System.Drawing.Point(0, 0);
-      this.panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(253, 28);
-      this.panel2.TabIndex = 4;
+      this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnClear.Location = new System.Drawing.Point(535, 12);
+      this.btnClear.Name = "btnClear";
+      this.btnClear.Size = new System.Drawing.Size(77, 38);
+      this.btnClear.TabIndex = 7;
+      this.btnClear.Text = "Clear";
+      this.btnClear.UseVisualStyleBackColor = true;
+      this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
       // 
-      // parseToolStripMenuItem
+      // btnPaste
       // 
-      this.parseToolStripMenuItem.Name = "parseToolStripMenuItem";
-      this.parseToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
-      this.parseToolStripMenuItem.Text = "Parse Input";
-      this.parseToolStripMenuItem.Click += new System.EventHandler(this.btnParse_Click);
-      // 
-      // label3
-      // 
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(89, 19);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(55, 23);
-      this.label3.TabIndex = 3;
-      this.label3.Text = "label3";
-      // 
-      // cbPrompt
-      // 
-      this.cbPrompt.AutoSize = true;
-      this.cbPrompt.Checked = true;
-      this.cbPrompt.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.cbPrompt.Location = new System.Drawing.Point(20, -1);
-      this.cbPrompt.Name = "cbPrompt";
-      this.cbPrompt.Size = new System.Drawing.Size(164, 27);
-      this.cbPrompt.TabIndex = 0;
-      this.cbPrompt.Text = "Generate Prompt";
-      this.cbPrompt.UseVisualStyleBackColor = true;
-      // 
-      // label4
-      // 
-      this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(16, 19);
-      this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(76, 23);
-      this.label4.TabIndex = 4;
-      this.label4.Text = "Focused:";
+      this.btnPaste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnPaste.Location = new System.Drawing.Point(618, 12);
+      this.btnPaste.Name = "btnPaste";
+      this.btnPaste.Size = new System.Drawing.Size(69, 39);
+      this.btnPaste.TabIndex = 6;
+      this.btnPaste.Text = "Paste";
+      this.btnPaste.UseVisualStyleBackColor = true;
+      this.btnPaste.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
       // 
       // btnParse
       // 
@@ -633,27 +624,78 @@
       this.btnParse.Visible = false;
       this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
       // 
-      // btnPaste
+      // label4
       // 
-      this.btnPaste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnPaste.Location = new System.Drawing.Point(618, 12);
-      this.btnPaste.Name = "btnPaste";
-      this.btnPaste.Size = new System.Drawing.Size(69, 39);
-      this.btnPaste.TabIndex = 6;
-      this.btnPaste.Text = "Paste";
-      this.btnPaste.UseVisualStyleBackColor = true;
-      this.btnPaste.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+      this.label4.AutoSize = true;
+      this.label4.Location = new System.Drawing.Point(16, 19);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(76, 23);
+      this.label4.TabIndex = 4;
+      this.label4.Text = "Focused:";
       // 
-      // btnClear
+      // label3
       // 
-      this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnClear.Location = new System.Drawing.Point(535, 12);
-      this.btnClear.Name = "btnClear";
-      this.btnClear.Size = new System.Drawing.Size(77, 38);
-      this.btnClear.TabIndex = 7;
-      this.btnClear.Text = "Clear";
-      this.btnClear.UseVisualStyleBackColor = true;
-      this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+      this.label3.AutoSize = true;
+      this.label3.Location = new System.Drawing.Point(89, 19);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(55, 23);
+      this.label3.TabIndex = 3;
+      this.label3.Text = "label3";
+      // 
+      // props
+      // 
+      // 
+      // 
+      // 
+      this.props.DocCommentDescription.AutoEllipsis = true;
+      this.props.DocCommentDescription.Cursor = System.Windows.Forms.Cursors.Default;
+      this.props.DocCommentDescription.Location = new System.Drawing.Point(4, 29);
+      this.props.DocCommentDescription.Margin = new System.Windows.Forms.Padding(57, 0, 57, 0);
+      this.props.DocCommentDescription.Name = "";
+      this.props.DocCommentDescription.Size = new System.Drawing.Size(752, 40);
+      this.props.DocCommentDescription.TabIndex = 1;
+      this.props.DocCommentImage = null;
+      // 
+      // 
+      // 
+      this.props.DocCommentTitle.Cursor = System.Windows.Forms.Cursors.Default;
+      this.props.DocCommentTitle.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
+      this.props.DocCommentTitle.Location = new System.Drawing.Point(4, 4);
+      this.props.DocCommentTitle.Margin = new System.Windows.Forms.Padding(57, 0, 57, 0);
+      this.props.DocCommentTitle.Name = "";
+      this.props.DocCommentTitle.Size = new System.Drawing.Size(752, 25);
+      this.props.DocCommentTitle.TabIndex = 0;
+      this.props.DocCommentTitle.UseMnemonic = false;
+      this.props.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.props.Location = new System.Drawing.Point(0, 0);
+      this.props.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+      this.props.Name = "props";
+      this.props.Size = new System.Drawing.Size(760, 210);
+      this.props.TabIndex = 1;
+      // 
+      // 
+      // 
+      this.props.ToolStrip.AccessibleName = "Property Grid";
+      this.props.ToolStrip.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
+      this.props.ToolStrip.AllowMerge = false;
+      this.props.ToolStrip.AutoSize = false;
+      this.props.ToolStrip.CanOverflow = false;
+      this.props.ToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+      this.props.ToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+      this.props.ToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+      this.props.ToolStrip.Location = new System.Drawing.Point(0, 1);
+      this.props.ToolStrip.Name = "";
+      this.props.ToolStrip.Padding = new System.Windows.Forms.Padding(38, 0, 25, 0);
+      this.props.ToolStrip.Size = new System.Drawing.Size(760, 31);
+      this.props.ToolStrip.TabIndex = 1;
+      this.props.ToolStrip.TabStop = true;
+      this.props.ToolStrip.Text = "PropertyGridToolBar";
+      this.props.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.props_PropertyValueChanged);
+      // 
+      // odMain
+      // 
+      this.odMain.CheckFileExists = false;
+      this.odMain.DefaultExt = "cdf";
       // 
       // Form1
       // 
@@ -676,25 +718,26 @@
       this.scRoot.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.scRoot)).EndInit();
       this.scRoot.ResumeLayout(false);
+      this.panel1.ResumeLayout(false);
+      this.panel1.PerformLayout();
       this.scRoot2.Panel1.ResumeLayout(false);
       this.scRoot2.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.scRoot2)).EndInit();
       this.scRoot2.ResumeLayout(false);
-      this.contextMenuStrip1.ResumeLayout(false);
-      this.contextMenuStrip2.ResumeLayout(false);
-      this.panel3.ResumeLayout(false);
-      this.panel3.PerformLayout();
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
+      this.panel2.ResumeLayout(false);
+      this.contextMenuStrip1.ResumeLayout(false);
       this.tabControl2.ResumeLayout(false);
       this.tabPage3.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.edOutput)).EndInit();
+      this.contextMenuStrip2.ResumeLayout(false);
       this.tabPage4.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.edInput)).EndInit();
-      this.panel2.ResumeLayout(false);
-      this.panel2.PerformLayout();
+      this.panel3.ResumeLayout(false);
+      this.panel3.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -711,10 +754,9 @@
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox edPassword;
-    private System.Windows.Forms.TextBox edFileName;
     private System.Windows.Forms.OpenFileDialog odMain;
     private System.Windows.Forms.Button button1;
-    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.Button btnBuild;
     private System.Windows.Forms.TextBox edError;
     private System.Windows.Forms.ImageList imageList1;
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
@@ -736,11 +778,16 @@
     private FastColoredTextBoxNS.FastColoredTextBox edInput;
     private System.Windows.Forms.ToolStripMenuItem parseToolStripMenuItem;
     private System.Windows.Forms.Label label3;
-    private System.Windows.Forms.CheckBox cbPrompt;
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.Button btnParse;
     private System.Windows.Forms.Button btnClear;
     private System.Windows.Forms.Button btnPaste;
+    private System.Windows.Forms.ToolStripMenuItem addTemplateToolStripMenuItem;
+    private System.Windows.Forms.ComboBox edFileName;
+    private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
+    private System.Windows.Forms.CheckBox cbPrompt;
+    private System.Windows.Forms.ProgressBar pbMain;
   }
 }
 

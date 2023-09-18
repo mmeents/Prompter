@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -90,7 +91,7 @@ namespace Prompter.Models {
   }
 
 
-  public class Types:Dictionary<int, ItemType> {    
+  public class Types : ConcurrentDictionary<int, ItemType> {    
     public Types() : base() {      
       Load();
     }
@@ -156,7 +157,7 @@ namespace Prompter.Models {
     }
   
     public IEnumerable<ItemType> GetChildrenItems(int id) {
-      return this.Select(x => x.Value).Where(x => (x.OwnerTypeId==id)).OrderBy(x => x.TypeRank);
+      return this.Select(x => x.Value).Where(x => ((x.OwnerTypeId==id)||(x.OwnerTypeId==0))).OrderBy(x => x.TypeRank);
     }
 
     public ItemType LoadSubtypes(ItemType item) {
