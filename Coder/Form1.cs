@@ -619,7 +619,7 @@ namespace Prompter {
         }
         edOutput.Text = s+Cs.nl;
       }      
-      wbOut.DocumentText = ""+Cs.GetRichTextEditor(edOutput.Text);
+      
     }
 
     private string GetChildContent(Item it) { 

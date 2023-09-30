@@ -72,7 +72,6 @@
       this.odMain = new System.Windows.Forms.OpenFileDialog();
       this.pb2 = new System.Windows.Forms.ProgressBar();
       this.tabPage5 = new System.Windows.Forms.TabPage();
-      this.wbOut = new System.Windows.Forms.WebBrowser();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.tabPage2.SuspendLayout();
@@ -98,7 +97,6 @@
       this.tabPage4.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.edInput)).BeginInit();
       this.panel3.SuspendLayout();
-      this.tabPage5.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControl1
@@ -727,22 +725,12 @@
       // 
       // tabPage5
       // 
-      this.tabPage5.Controls.Add(this.wbOut);
       this.tabPage5.Location = new System.Drawing.Point(4, 32);
       this.tabPage5.Name = "tabPage5";
       this.tabPage5.Size = new System.Drawing.Size(495, 500);
       this.tabPage5.TabIndex = 2;
       this.tabPage5.Text = "Viewer";
       this.tabPage5.UseVisualStyleBackColor = true;
-      // 
-      // wbOut
-      // 
-      this.wbOut.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.wbOut.Location = new System.Drawing.Point(0, 0);
-      this.wbOut.MinimumSize = new System.Drawing.Size(20, 20);
-      this.wbOut.Name = "wbOut";
-      this.wbOut.Size = new System.Drawing.Size(495, 500);
-      this.wbOut.TabIndex = 0;
       // 
       // Form1
       // 
@@ -785,7 +773,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.edInput)).EndInit();
       this.panel3.ResumeLayout(false);
       this.panel3.PerformLayout();
-      this.tabPage5.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -839,7 +826,6 @@
     private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     private System.Windows.Forms.ProgressBar pb2;
     private System.Windows.Forms.TabPage tabPage5;
-    private System.Windows.Forms.WebBrowser wbOut;
   }
 }
 
