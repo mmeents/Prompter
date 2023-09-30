@@ -17,10 +17,10 @@ using System.Net;
 
 namespace Prompter {
   public partial class Form1:Form {
-    private const string _defaultUrl = "https://mmeents.github.io/files/PrompterV101.cdf";
-    private const string _defaultDir = "C:\\ProgramData\\MMCommons";
-    private const string _defaultFile = "C:\\ProgramData\\MMCommons\\PrompterV102.cdf";
-    private const string _defaultSettings = "C:\\ProgramData\\MMCommons\\PrompterSettings.var";
+    private const string _defaultUrl = "https://mmeents.github.io/files/PrompterV104.cdf";
+    private string _defaultDir = "C:\\ProgramData\\MMCommons";
+    private string _defaultFile = "C:\\ProgramData\\MMCommons\\PrompterV104.cdf";
+    private string _defaultSettings = "C:\\ProgramData\\MMCommons\\PrompterSettings.var";
     private string _fileName;
     private string _folder;
     private CryptoKey _key;
@@ -28,9 +28,16 @@ namespace Prompter {
     private ItemCaster _itemCaster;
     private Item _inEditItem = null;
     private Variables _variables;
+    private bool _inReorder = false;
     public Form1() {
       InitializeComponent();
-    }
+      _defaultDir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"\\PrompterFiles";
+      if (!Directory.Exists(_defaultDir)) { 
+        Directory.CreateDirectory(_defaultDir);
+      }
+      _defaultFile = _defaultDir +"\\PrompterV104.cdf";
+      _defaultSettings = _defaultDir +"\\PrompterSettings";
+  }
     private void Form1_Shown(object sender, EventArgs e) {
       label3.Text ="if empty drag over a project first. Select item to focus.";
       _variables = new Variables();
@@ -47,7 +54,12 @@ namespace Prompter {
       edError.Text = msg+ Environment.NewLine+ edError.Text;
     }
     private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e) {
-      if (e.TabPageIndex == 1) {
+      if (e.TabPageIndex ==0) { 
+        edOutput.Text = "";
+        props.Item.Clear();
+        props.Refresh();
+        label3.Text = "Select Node to focus";        
+      } else if (e.TabPageIndex == 1) {
         try { 
           _fileName = edFileName.Text;
           int fnl = _fileName.ParseLast("\\").Length + 1;
@@ -66,28 +78,36 @@ namespace Prompter {
           string pw = edPassword.Text;
           _key = new CryptoKey();
           _key.SetCryptoKey(pw);      
-          _itemCaster = new ItemCaster(tvBuilder, _key, _fileName);
+          SetInProgress(3000);
+          _itemCaster = new ItemCaster(this, tvBuilder, _key, _fileName);
           e.Cancel= (!(pw.Length>0)) || (!(Directory.Exists(_folder)));
         } catch (Exception ex) {
           logMsg(ex.Message);
           e.Cancel = true;
+          SetInProgress(0);
         }
       }
     }
 
     public void SetInProgress(int ProgressPercent) { 
       if (ProgressPercent == 0) {
-        pbMain.Visible = false;        
+        if (pbMain.Visible) pbMain.Visible = false;    
+        if (pb2.Visible) pb2.Visible = false;
         if (!tvTools.Enabled) tvTools.Enabled = true;
         if (!tvBuilder.Enabled) tvBuilder.Enabled=true;
         if (!props.Enabled) props.Enabled = true;        
       } else { 
-        pbMain.Visible = true;        
+        if (!pbMain.Visible) pbMain.Visible = true;        
+        if (!pb2.Visible ) pb2.Visible = true;
         if(!tvTools.Enabled) tvTools.Enabled=false;
         if(!tvBuilder.Enabled) tvBuilder.Enabled=false;
         if(!props.Enabled) props.Enabled=false;
       }
-      pbMain.Value = ProgressPercent;      
+      System.Windows.Forms.Application.DoEvents();
+      pbMain.Value = ProgressPercent;
+      System.Windows.Forms.Application.DoEvents();
+      pb2.Value = ProgressPercent;
+      System.Windows.Forms.Application.DoEvents();
     }
     private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
       this.Text = (tabControl1.SelectedIndex == 0) ? "Prompter Setup":$"Prompter {_fileName}";
@@ -96,7 +116,10 @@ namespace Prompter {
         LoadtvTools();
         _itemCaster.LoadTreeviewItemsAsync(tvBuilder, pbMain);
         SetInProgress(0);
-      }      
+      }
+      if(tabControl1.SelectedIndex==0) { 
+        if (pb2.Visible) pb2.Visible = false;
+      }
     }
 
     private void LoadtvTools() {
@@ -262,14 +285,16 @@ namespace Prompter {
     }
 
     private void tvBuilder_AfterSelect(object sender, TreeViewEventArgs e) {
-      try { 
-      if(e?.Node==null) return;
-      _inEditItem=(Item)e.Node;
-      if(_inEditItem==null) return;
-        SetInProgress(9500);
-        ResetPropEditors(_inEditItem);
-      } finally {
-        SetInProgress(0);
+      if(!_inReorder) { 
+        try { 
+        if(e?.Node==null) return;
+        _inEditItem=(Item)e.Node;
+        if(_inEditItem==null) return;
+          SetInProgress(9500);
+          ResetPropEditors(_inEditItem);
+        } finally {
+          SetInProgress(0);
+        }
       }
     }
 
@@ -296,6 +321,7 @@ namespace Prompter {
 
       props.Item.Clear();
       if(
+          item.TypeId==0||
           item.TypeId==(int)TnType.Project||
           item.TypeId==(int)TnType.Template||
           item.TypeId==(int)TnType.Chapters||
@@ -305,6 +331,8 @@ namespace Prompter {
       ) {
         ItemType it = _types[item.TypeId];
         ItemType itCat = _types[it.CatagoryTypeId];
+        props.Item.Add("Rank", item.ItemRank, false, itCat.Text, "Rank determins the sibling order", true);
+
         var cp = new PropertyGridEx.CustomProperty("Name", item.Text, it.Readonly, itCat.Text, it.Desc, it.Visible);
         props.Item.Add(cp);
 
@@ -313,7 +341,15 @@ namespace Prompter {
           Name="Prompt", Category=itCat.Text, Description=it.Desc, Value=_types[item.ValueTypeId].Name,
           DisplayMember="Text", ValueMember="TypeId", Datasource=al, Visible=true, IsReadOnly=false, IsDropdownResizable=true
         };
-        props.Item.Add(customProperty);        
+        props.Item.Add(customProperty);
+
+        var pt = _types.GetProjectTypes().ToArray<ItemType>();
+        var customProperty2 = new PropertyGridEx.CustomProperty() {
+          Name="Type", Category=itCat.Text, Description="Type on object", Value=_types[item.TypeId].Name,
+          DisplayMember="Text", ValueMember="TypeId", Datasource=pt, Visible=true, IsReadOnly=false, IsDropdownResizable=true
+        };
+        props.Item.Add(customProperty2);
+
       }     
 
       props.Refresh();
@@ -335,8 +371,17 @@ namespace Prompter {
             if(Convert.ToInt32(y.SelectedValue)!=_inEditItem.ValueTypeId) {
               _inEditItem.ValueTypeId=Convert.ToInt32(y.SelectedValue);
             }
+          } else if(y.Name=="Rank") { 
+            if(Convert.ToInt32( y.Value)>0 && Convert.ToInt32(y.Value) != _inEditItem.ItemRank) { 
+              _inEditItem.ItemRank=Convert.ToInt32(y.Value);
+            }
+          } else if(y.Name=="Type") { 
+            int newtypeId = Convert.ToInt32(y.SelectedValue);
+            if (newtypeId != 0 && newtypeId !=_inEditItem.TypeId) { 
+              _inEditItem.TypeId=Convert.ToInt32(y.SelectedValue);
+            }
           }
-        }
+        } 
         if(_inEditItem.Dirty) {
           try {
             SetInProgress(9500);
@@ -368,16 +413,63 @@ namespace Prompter {
       } else {  
         deleteToolStripMenuItem.Enabled = false; 
       }
-      if ( _inEditItem.PrevVisibleNode ==null) {
-        moveUpToolStripMenuItem.Enabled= false;
+
+      if ( _inEditItem.CanSwitchUp()) {
+        moveUpToolStripMenuItem.Enabled= true;
       } else {
-        moveUpToolStripMenuItem.Enabled = true;
+        moveUpToolStripMenuItem.Enabled = false;
       }
-      if(_inEditItem.NextVisibleNode==null) {
-        moveDownToolStripMenuItem.Enabled= false;
+      if(_inEditItem.CanSwitchDown()) {
+        moveDownToolStripMenuItem.Enabled= true;
       } else {
-        moveDownToolStripMenuItem.Enabled=true;
+        moveDownToolStripMenuItem.Enabled=false;
       }
+    }
+
+    private void moveUpToolStripMenuItem_Click(object sender, EventArgs e) {
+      if(_inEditItem == null) return;
+      if(!_inEditItem.CanSwitchUp()) return;
+      var otherItem = _inEditItem.GetSwitchUpItem();
+      _inEditItem.SwitchRankUp();
+      if(_inEditItem.Dirty) { _itemCaster.SaveItem( _inEditItem);}      
+      if(otherItem != null && otherItem.Dirty) _itemCaster.SaveItem(otherItem);
+
+      var opItem = _inEditItem;
+      _inReorder=true;
+      try {
+        var parentItem = (Item)_inEditItem.Parent;
+        var otherItemIndex = parentItem.Nodes.IndexOf(otherItem);
+        if (otherItemIndex >=0) { 
+          parentItem.Nodes.Remove(opItem);
+          parentItem.Nodes.Insert(otherItemIndex, opItem);
+        }
+      } finally {
+        _inReorder=false;
+      }
+      tvBuilder.SelectedNode=opItem;
+    }
+
+    private void moveDownToolStripMenuItem_Click(object sender, EventArgs e) {
+      if(_inEditItem == null) return;
+      if(!_inEditItem.CanSwitchDown()) return;
+      var otherItem = _inEditItem.GetSwitchDownItem();
+      _inEditItem.SwitchRankDown();
+      if(_inEditItem.Dirty) { _itemCaster.SaveItem(_inEditItem); }
+      if(otherItem!=null&&otherItem.Dirty) _itemCaster.SaveItem(otherItem);
+      var opItem = _inEditItem;
+      _inReorder = true;
+      try {
+        var parentItem = (Item)_inEditItem.Parent;
+        var inEditIndex = parentItem.Nodes.IndexOf(opItem);
+        if(inEditIndex>=0) {
+          parentItem.Nodes.RemoveAt(inEditIndex);          
+          parentItem.Nodes.Insert(inEditIndex+1, opItem);
+        }
+      } finally { 
+        _inReorder = false; 
+      }
+      tvBuilder.SelectedNode = opItem;
+      
     }
 
     private void deleteToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -503,7 +595,7 @@ namespace Prompter {
         }        
         edOutput.Text = promptTemplate.Replace("[NODE]", it.Text).Replace("[PARENT]", Parent).Replace("[GRANDPARENT]", GrandParent);
       } else { 
-        string s = it.Text+Cs.nl+Cs.nl;
+        string s = it.Text+Cs.nl;
         if (it.OwnerId > 0) { 
           if (it.Parent !=null) { 
             s = it.Parent.Text + Cs.nl+Cs.nl+s;
@@ -526,7 +618,8 @@ namespace Prompter {
           }
         }
         edOutput.Text = s+Cs.nl;
-      }
+      }      
+      wbOut.DocumentText = ""+Cs.GetRichTextEditor(edOutput.Text);
     }
 
     private string GetChildContent(Item it) { 
@@ -547,6 +640,6 @@ namespace Prompter {
       tvBuilder.Height=splitContainer1.Height-panel2.Height-2;
     }
 
-    
+
   }
 }

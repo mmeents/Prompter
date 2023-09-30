@@ -17,6 +17,7 @@ namespace Prompter.Models {
     private int _valueTypeId = 0;
 
     public bool Dirty = false;
+           
     public Item() : base() { }
     public int Id { get; set; } = 0;
     public int OwnerId { get; set; } = 0;
@@ -62,6 +63,59 @@ namespace Prompter.Models {
     public string AsChunk() {
       return $"{Id} {OwnerId} {_typeId} {_statusId} {_itemRank} {_valueTypeId} {base.Text.AsBase64Encoded()}".AsBase64Encoded();
     }
+
+    public bool CanSwitchDown() { 
+      if (Parent == null) return false;
+      var ImChildNo = Parent.Nodes.IndexOf(this);
+      if( ImChildNo < 0 ) return false;      
+      return ImChildNo < Parent.Nodes.Count-1;
+    }
+    public Item GetSwitchDownItem() {
+      if(Parent==null) return null;
+      var ImChildNo = Parent.Nodes.IndexOf(this);
+      if(ImChildNo<0) return null;
+      if(ImChildNo+1<=Parent.Nodes.Count-1) {    
+        return ((Item)Parent.Nodes[ImChildNo+1]);
+      }
+      return null;
+    }
+    public bool SwitchRankDown() {
+      if(Parent==null) return false;
+      var ImChildNo = Parent.Nodes.IndexOf(this);
+      if(ImChildNo<0) return false;
+      if(ImChildNo+1 <=Parent.Nodes.Count-1) {
+        var rank = ItemRank;
+        ItemRank =((Item) Parent.Nodes[ImChildNo+1]).ItemRank;
+        ((Item)Parent.Nodes[ImChildNo+1]).ItemRank = rank;
+        return true;
+      }
+      return false;
+    }
+
+    public bool CanSwitchUp() {
+      if(Parent==null) return false;      
+      return Parent.Nodes.IndexOf(this) >= 1;
+    }
+
+    public Item GetSwitchUpItem() {
+      if(Parent==null) return null;
+      var ImChildNo = Parent.Nodes.IndexOf(this);
+      if( ImChildNo<1) return null;
+      return ((Item)Parent.Nodes[ImChildNo-1]);
+    }
+
+    public bool SwitchRankUp() {
+      if(Parent==null) return false;
+      var ImChildNo = Parent.Nodes.IndexOf(this);
+      if(ImChildNo<1) return false;
+      var rank = ItemRank;
+      ItemRank =((Item)Parent.Nodes[ImChildNo-1]).ItemRank;
+      ((Item)Parent.Nodes[ImChildNo-1]).ItemRank = rank;
+      return false;
+    }
+
+    
+
     public Item FromChunk(string chunk) {
       string base1 = chunk.AsBase64Decoded();
       Id=base1.ParseString(" ", 0).AsInt();
@@ -107,36 +161,44 @@ namespace Prompter.Models {
     private TreeView _tv;
     private CryptoVars _cryptoVars;
     private Items _items;
-    
-    public ItemCaster(TreeView tv, CryptoKey key, string fileName) {
+    private Form1 _ownerForm;
+    public ItemCaster(Form1 ownerform, TreeView tv, CryptoKey key, string fileName) {
       _items = new Items();
-      _cryptoVars=new CryptoVars();
+      _cryptoVars=new CryptoVars(ownerform);
       _tv = tv;
+      _ownerForm = ownerform;
       _cryptoVars.FileName=fileName;
       _cryptoVars.SetKey(key);
-      _cryptoVars.LoadValues();
+      int divCount = _cryptoVars.Keys.Count;
+      divCount =(divCount ==0 ? 1 : divCount);
+      int step = (4000)/divCount;
+      int val = 6000+step;
 
       foreach(string k in _cryptoVars.Keys) { 
         Item x = new Item().FromChunk(_cryptoVars[k].Value);
-        _items[x.Id] = x;        
+        _items[x.Id] = x;
+        val = val + step;
       }
     }
 
     public void LoadTreeviewItemsAsync(System.Windows.Forms.TreeView ownerItem, ProgressBar pb) {      
       ownerItem.Nodes.Clear();
       decimal step = (pb.Maximum - pb.Value - 1); 
+      int val = pb.Value;
       IEnumerable<Item> result = _items.GetChildrenItems(0);
-      int rc = result.Count();
-      step = (rc==0 ? step : ( rc < step ?  step / rc : 1 ));
+      int rc = result.Count()+1;
+      step = (  step / rc);
       foreach(Item item in result) {
         ownerItem.Nodes.Add(LoadChildren(item));
-        if (pb.Value +Convert.ToInt32(step) < pb.Maximum) {
-          pb.Value=pb.Value+Convert.ToInt32(step);
+        _ownerForm.SetInProgress(val );
+        if (val +Convert.ToInt32(step) < 10000) {
+          val=val+Convert.ToInt32(step);          
         }         
       }
-      if (pb.Value +Convert.ToInt32(step) < pb.Maximum) {
-          pb.Value=pb.Value+Convert.ToInt32(step);
-        }
+      if (val +Convert.ToInt32(step) < 10000) {
+          val=val+Convert.ToInt32(step);
+        _ownerForm.SetInProgress(val);        
+      }
     }
 
     public Item LoadChildren(Item item) {

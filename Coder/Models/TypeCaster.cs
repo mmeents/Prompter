@@ -145,11 +145,22 @@ namespace Prompter.Models {
 
       this[43]=new ItemType() { TypeId=43, OwnerTypeId=28, CatagoryTypeId=3, EditorTypeId=11, TypeRank=1, TypeEnum=1, Visible=false, Readonly=true, Name="Prompt Types", Desc="Prompt Type Lookups" };
 
-      this[44]=new ItemType() { TypeId=44, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=1, TypeEnum=1, Visible=false, Readonly=true, Name="Hook", Desc="brainstorm 10 story hooks for a Creative Descriptive Objective Expository Narrative Technical Review for [NODE] " };
-      this[45]=new ItemType() { TypeId=45, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=2, TypeEnum=2, Visible=false, Readonly=true, Name="Expository Hook's ending", Desc= $"in context of '[PARENT]', based on the premise of [NODE] hook, can we brainstorm 10 different threads of detail and order them by importance?" };
-      this[46]=new ItemType() { TypeId=46, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=3, TypeEnum=3, Visible=false, Readonly=true, Name="Expository Synopsis", Desc=$"Given the following premise and ending, devise a detailed story synopsis that is structured as \"[PARENT]\". Make sure to include plenty of detail and examples. Premise: [GRANDPARENT]. Ending: [NODE]." };
-      this[47]=new ItemType() { TypeId=47, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=3, TypeEnum=3, Visible=false, Readonly=true, Name="Child Template", Desc=String.Empty };
-
+      this[44]=new ItemType() { TypeId=44, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=1, TypeEnum=1, Visible=false, Readonly=true, Name="Tech Expository Hook", 
+        Desc="brainstorm 10 story hooks for a Technical Expository of [NODE] " };      
+      this[45]=new ItemType() { TypeId=45, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=2, TypeEnum=2, Visible=false, Readonly=true, Name="Tech Review Details", 
+        Desc= $"in context of '[PARENT]', based on the premise of [NODE], can we brainstorm 10 different threads of detail and order them by importance?" };
+      this[46]=new ItemType() { TypeId=46, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=3, TypeEnum=3, Visible=false, Readonly=true, Name="Expository Synopsis", 
+        Desc=$"Given the following premise and ending, devise a detailed synopsis structured around \"[PARENT]\". Premise: [GRANDPARENT]. Ending: [NODE]." };
+      this[47]=new ItemType() { TypeId=47, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=4, TypeEnum=4, Visible=false, Readonly=true, Name="Child Template", Desc=String.Empty };
+      this[48]=new ItemType() { TypeId=48, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=5, TypeEnum=5, Visible=false, Readonly=true, Name="Creative Narrative Hook",
+        Desc="brainstorm 10 story hooks for a Creative Narrative for [NODE] "
+      };
+      this[49]=new ItemType() {TypeId=49, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=6, TypeEnum=6, Visible=false, Readonly=true, Name="Creative Narrative Endings",
+        Desc=$"in context of '[PARENT]', based on the premise of [NODE], can we brainstorm 10 different endings?"
+      };
+      this[50]=new ItemType() {TypeId=50, OwnerTypeId=43, CatagoryTypeId=4, EditorTypeId=9, TypeRank=7, TypeEnum=7, Visible=false, Readonly=true, Name="Creative Synopsis",
+        Desc=$"Given the following premise and ending, devise a detailed story synopsis structured around \"[PARENT]\". Premise: [GRANDPARENT]. Ending: [NODE]."
+      };
 
 
 
@@ -160,6 +171,9 @@ namespace Prompter.Models {
       return this.Select(x => x.Value).Where(x => ((x.OwnerTypeId==id)||(x.OwnerTypeId==0))).OrderBy(x => x.TypeRank);
     }
 
+    public IEnumerable<ItemType> GetProjectTypes() {       
+      return this.Select(x => x.Value).Where(x => (x.TypeId > 17 && x.TypeId< 29)).OrderBy(x => x.TypeId);  
+    }
     public ItemType LoadSubtypes(ItemType item) {
       var items = GetOwnersTypes(item.TypeId);
       if(item.Nodes.Count>0) item.Nodes.Clear();

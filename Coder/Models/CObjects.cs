@@ -212,7 +212,10 @@ namespace Prompter.Models {
 
   public class CryptoVars : Variables, ICryptoVars {
     public ICryptoKey EncryptionKey { get; set; }
-    public CryptoVars(): base() { }
+    private Form1 _ownerForm;
+    public CryptoVars(Form1 ownerForm) : base() {
+      _ownerForm=ownerForm;
+     }
     public void SetKey(CryptoKey cryptoKey) {
       EncryptionKey = cryptoKey ?? throw new ArgumentNullException(nameof(cryptoKey));
       if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName)) {
@@ -251,8 +254,14 @@ namespace Prompter.Models {
     }
 
     public void LoadValues() {
-      foreach (string key in this.GetKeys()) {
+      _ownerForm.SetInProgress(4000);
+      var keys = this.GetKeys();
+      var step = 2000/keys.Count+1;
+      var val = 4000 + step;
+      foreach (string key in keys) {
         _ = this[key];
+        if (val < 6000) _ownerForm.SetInProgress(val);
+        val = val + step;
       }
     }
     public new ICryptoVarItem this[string key] {
