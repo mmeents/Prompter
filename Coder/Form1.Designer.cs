@@ -47,10 +47,11 @@
       this.tvBuilder = new System.Windows.Forms.TreeView();
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+      this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabControl2 = new System.Windows.Forms.TabControl();
       this.tabPage3 = new System.Windows.Forms.TabPage();
       this.edOutput = new FastColoredTextBoxNS.FastColoredTextBox();
@@ -69,6 +70,9 @@
       this.label3 = new System.Windows.Forms.Label();
       this.props = new PropertyGridEx.PropertyGridEx();
       this.odMain = new System.Windows.Forms.OpenFileDialog();
+      this.pb2 = new System.Windows.Forms.ProgressBar();
+      this.tabPage5 = new System.Windows.Forms.TabPage();
+      this.wbOut = new System.Windows.Forms.WebBrowser();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.tabPage2.SuspendLayout();
@@ -94,6 +98,7 @@
       this.tabPage4.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.edInput)).BeginInit();
       this.panel3.SuspendLayout();
+      this.tabPage5.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControl1
@@ -112,6 +117,7 @@
       // 
       // tabPage1
       // 
+      this.tabPage1.Controls.Add(this.pb2);
       this.tabPage1.Controls.Add(this.edFileName);
       this.tabPage1.Controls.Add(this.edError);
       this.tabPage1.Controls.Add(this.btnBuild);
@@ -153,7 +159,7 @@
       this.btnBuild.FlatAppearance.BorderColor = System.Drawing.Color.DodgerBlue;
       this.btnBuild.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Cyan;
       this.btnBuild.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Teal;
-      this.btnBuild.Location = new System.Drawing.Point(376, 276);
+      this.btnBuild.Location = new System.Drawing.Point(419, 274);
       this.btnBuild.Name = "btnBuild";
       this.btnBuild.Size = new System.Drawing.Size(111, 45);
       this.btnBuild.TabIndex = 5;
@@ -360,6 +366,8 @@
       this.tvBuilder.AllowDrop = true;
       this.tvBuilder.ContextMenuStrip = this.contextMenuStrip1;
       this.tvBuilder.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.tvBuilder.FullRowSelect = true;
+      this.tvBuilder.HideSelection = false;
       this.tvBuilder.ImageIndex = 0;
       this.tvBuilder.ImageList = this.imageList1;
       this.tvBuilder.LabelEdit = true;
@@ -382,12 +390,13 @@
       this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
       this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addTemplateToolStripMenuItem,
-            this.deleteToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.moveUpToolStripMenuItem,
-            this.moveDownToolStripMenuItem});
+            this.moveDownToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.deleteToolStripMenuItem});
       this.contextMenuStrip1.Name = "contextMenuStrip1";
-      this.contextMenuStrip1.Size = new System.Drawing.Size(173, 124);
+      this.contextMenuStrip1.Size = new System.Drawing.Size(173, 130);
       this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
       // 
       // addTemplateToolStripMenuItem
@@ -396,13 +405,6 @@
       this.addTemplateToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
       this.addTemplateToolStripMenuItem.Text = "Add Template";
       this.addTemplateToolStripMenuItem.Click += new System.EventHandler(this.addTemplateToolStripMenuItem_Click);
-      // 
-      // deleteToolStripMenuItem
-      // 
-      this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-      this.deleteToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
-      this.deleteToolStripMenuItem.Text = "Delete";
-      this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
       // 
       // saveToolStripMenuItem
       // 
@@ -416,17 +418,32 @@
       this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
       this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
       this.moveUpToolStripMenuItem.Text = "Move Up";
+      this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
       // 
       // moveDownToolStripMenuItem
       // 
       this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
       this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
       this.moveDownToolStripMenuItem.Text = "Move Down";
+      this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
+      // 
+      // toolStripMenuItem1
+      // 
+      this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+      this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 6);
+      // 
+      // deleteToolStripMenuItem
+      // 
+      this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+      this.deleteToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
+      this.deleteToolStripMenuItem.Text = "Delete";
+      this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
       // 
       // tabControl2
       // 
       this.tabControl2.Controls.Add(this.tabPage3);
       this.tabControl2.Controls.Add(this.tabPage4);
+      this.tabControl2.Controls.Add(this.tabPage5);
       this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tabControl2.Location = new System.Drawing.Point(0, 0);
       this.tabControl2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -528,11 +545,11 @@
       // tabPage4
       // 
       this.tabPage4.Controls.Add(this.edInput);
-      this.tabPage4.Location = new System.Drawing.Point(4, 25);
+      this.tabPage4.Location = new System.Drawing.Point(4, 32);
       this.tabPage4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabPage4.Name = "tabPage4";
       this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.tabPage4.Size = new System.Drawing.Size(495, 507);
+      this.tabPage4.Size = new System.Drawing.Size(495, 500);
       this.tabPage4.TabIndex = 1;
       this.tabPage4.Text = "Input";
       this.tabPage4.UseVisualStyleBackColor = true;
@@ -572,7 +589,7 @@
       this.edInput.RightBracket2 = '}';
       this.edInput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
       this.edInput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("edInput.ServiceColors")));
-      this.edInput.Size = new System.Drawing.Size(489, 499);
+      this.edInput.Size = new System.Drawing.Size(489, 492);
       this.edInput.TabIndex = 0;
       this.edInput.Zoom = 100;
       // 
@@ -650,7 +667,7 @@
       this.props.DocCommentDescription.AutoEllipsis = true;
       this.props.DocCommentDescription.Cursor = System.Windows.Forms.Cursors.Default;
       this.props.DocCommentDescription.Location = new System.Drawing.Point(4, 29);
-      this.props.DocCommentDescription.Margin = new System.Windows.Forms.Padding(57, 0, 57, 0);
+      this.props.DocCommentDescription.Margin = new System.Windows.Forms.Padding(72, 0, 72, 0);
       this.props.DocCommentDescription.Name = "";
       this.props.DocCommentDescription.Size = new System.Drawing.Size(752, 40);
       this.props.DocCommentDescription.TabIndex = 1;
@@ -661,7 +678,7 @@
       this.props.DocCommentTitle.Cursor = System.Windows.Forms.Cursors.Default;
       this.props.DocCommentTitle.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
       this.props.DocCommentTitle.Location = new System.Drawing.Point(4, 4);
-      this.props.DocCommentTitle.Margin = new System.Windows.Forms.Padding(57, 0, 57, 0);
+      this.props.DocCommentTitle.Margin = new System.Windows.Forms.Padding(72, 0, 72, 0);
       this.props.DocCommentTitle.Name = "";
       this.props.DocCommentTitle.Size = new System.Drawing.Size(752, 25);
       this.props.DocCommentTitle.TabIndex = 0;
@@ -685,7 +702,7 @@
       this.props.ToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
       this.props.ToolStrip.Location = new System.Drawing.Point(0, 1);
       this.props.ToolStrip.Name = "";
-      this.props.ToolStrip.Padding = new System.Windows.Forms.Padding(38, 0, 25, 0);
+      this.props.ToolStrip.Padding = new System.Windows.Forms.Padding(48, 0, 32, 0);
       this.props.ToolStrip.Size = new System.Drawing.Size(760, 31);
       this.props.ToolStrip.TabIndex = 1;
       this.props.ToolStrip.TabStop = true;
@@ -696,6 +713,36 @@
       // 
       this.odMain.CheckFileExists = false;
       this.odMain.DefaultExt = "cdf";
+      // 
+      // pb2
+      // 
+      this.pb2.ForeColor = System.Drawing.Color.Blue;
+      this.pb2.Location = new System.Drawing.Point(122, 226);
+      this.pb2.Maximum = 10000;
+      this.pb2.Name = "pb2";
+      this.pb2.Size = new System.Drawing.Size(708, 28);
+      this.pb2.TabIndex = 11;
+      this.pb2.Value = 500;
+      this.pb2.Visible = false;
+      // 
+      // tabPage5
+      // 
+      this.tabPage5.Controls.Add(this.wbOut);
+      this.tabPage5.Location = new System.Drawing.Point(4, 32);
+      this.tabPage5.Name = "tabPage5";
+      this.tabPage5.Size = new System.Drawing.Size(495, 500);
+      this.tabPage5.TabIndex = 2;
+      this.tabPage5.Text = "Viewer";
+      this.tabPage5.UseVisualStyleBackColor = true;
+      // 
+      // wbOut
+      // 
+      this.wbOut.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.wbOut.Location = new System.Drawing.Point(0, 0);
+      this.wbOut.MinimumSize = new System.Drawing.Size(20, 20);
+      this.wbOut.Name = "wbOut";
+      this.wbOut.Size = new System.Drawing.Size(495, 500);
+      this.wbOut.TabIndex = 0;
       // 
       // Form1
       // 
@@ -738,6 +785,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.edInput)).EndInit();
       this.panel3.ResumeLayout(false);
       this.panel3.PerformLayout();
+      this.tabPage5.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -788,6 +836,10 @@
     private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
     private System.Windows.Forms.CheckBox cbPrompt;
     private System.Windows.Forms.ProgressBar pbMain;
+    private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+    private System.Windows.Forms.ProgressBar pb2;
+    private System.Windows.Forms.TabPage tabPage5;
+    private System.Windows.Forms.WebBrowser wbOut;
   }
 }
 
