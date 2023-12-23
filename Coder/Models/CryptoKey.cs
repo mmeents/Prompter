@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Prompter.Models {
 
@@ -82,6 +83,7 @@ namespace Prompter.Models {
         return Convert.FromBase64String(val.Replace('?', '='));
       }
     }
+
 
   }
 

@@ -27,6 +27,7 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
+      this.pb2 = new System.Windows.Forms.ProgressBar();
       this.edFileName = new System.Windows.Forms.ComboBox();
       this.edError = new System.Windows.Forms.TextBox();
       this.btnBuild = new System.Windows.Forms.Button();
@@ -56,12 +57,15 @@
       this.tabPage3 = new System.Windows.Forms.TabPage();
       this.edOutput = new FastColoredTextBoxNS.FastColoredTextBox();
       this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.generatePromptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.parseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabPage4 = new System.Windows.Forms.TabPage();
       this.edInput = new FastColoredTextBoxNS.FastColoredTextBox();
+      this.tabPage5 = new System.Windows.Forms.TabPage();
+      this.wbOut = new System.Windows.Forms.WebBrowser();
       this.panel3 = new System.Windows.Forms.Panel();
       this.btnClear = new System.Windows.Forms.Button();
       this.btnPaste = new System.Windows.Forms.Button();
@@ -70,9 +74,7 @@
       this.label3 = new System.Windows.Forms.Label();
       this.props = new PropertyGridEx.PropertyGridEx();
       this.odMain = new System.Windows.Forms.OpenFileDialog();
-      this.pb2 = new System.Windows.Forms.ProgressBar();
-      this.tabPage5 = new System.Windows.Forms.TabPage();
-      this.wbOut = new System.Windows.Forms.WebBrowser();
+      this.cbTrack = new System.Windows.Forms.CheckBox();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.tabPage2.SuspendLayout();
@@ -97,8 +99,8 @@
       this.contextMenuStrip2.SuspendLayout();
       this.tabPage4.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.edInput)).BeginInit();
-      this.panel3.SuspendLayout();
       this.tabPage5.SuspendLayout();
+      this.panel3.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControl1
@@ -133,6 +135,17 @@
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "Setup";
       this.tabPage1.UseVisualStyleBackColor = true;
+      // 
+      // pb2
+      // 
+      this.pb2.ForeColor = System.Drawing.Color.Blue;
+      this.pb2.Location = new System.Drawing.Point(122, 226);
+      this.pb2.Maximum = 10000;
+      this.pb2.Name = "pb2";
+      this.pb2.Size = new System.Drawing.Size(708, 28);
+      this.pb2.TabIndex = 11;
+      this.pb2.Value = 500;
+      this.pb2.Visible = false;
       // 
       // edFileName
       // 
@@ -300,6 +313,7 @@
       this.cbPrompt.TabIndex = 1;
       this.cbPrompt.Text = "Generate Prompt";
       this.cbPrompt.UseVisualStyleBackColor = true;
+      this.cbPrompt.CheckedChanged += new System.EventHandler(this.cbPrompt_CheckedChanged);
       // 
       // scRoot2
       // 
@@ -506,50 +520,58 @@
       // 
       this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
       this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generatePromptToolStripMenuItem,
             this.clearToolStripMenuItem,
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
             this.parseToolStripMenuItem});
       this.contextMenuStrip2.Name = "contextMenuStrip2";
-      this.contextMenuStrip2.Size = new System.Drawing.Size(151, 100);
+      this.contextMenuStrip2.Size = new System.Drawing.Size(192, 124);
       this.contextMenuStrip2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip2_Opening);
+      // 
+      // generatePromptToolStripMenuItem
+      // 
+      this.generatePromptToolStripMenuItem.Name = "generatePromptToolStripMenuItem";
+      this.generatePromptToolStripMenuItem.Size = new System.Drawing.Size(191, 24);
+      this.generatePromptToolStripMenuItem.Text = "Generate Prompt";
+      this.generatePromptToolStripMenuItem.Click += new System.EventHandler(this.generatePromptToolStripMenuItem_Click);
       // 
       // clearToolStripMenuItem
       // 
       this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-      this.clearToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.clearToolStripMenuItem.Size = new System.Drawing.Size(191, 24);
       this.clearToolStripMenuItem.Text = "Clear";
       this.clearToolStripMenuItem.Click += new System.EventHandler(this.btnClear_Click);
       // 
       // copyToolStripMenuItem
       // 
       this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-      this.copyToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.copyToolStripMenuItem.Size = new System.Drawing.Size(191, 24);
       this.copyToolStripMenuItem.Text = "Copy";
       this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
       // 
       // pasteToolStripMenuItem
       // 
       this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-      this.pasteToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.pasteToolStripMenuItem.Size = new System.Drawing.Size(191, 24);
       this.pasteToolStripMenuItem.Text = "Paste";
       this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
       // 
       // parseToolStripMenuItem
       // 
       this.parseToolStripMenuItem.Name = "parseToolStripMenuItem";
-      this.parseToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.parseToolStripMenuItem.Size = new System.Drawing.Size(191, 24);
       this.parseToolStripMenuItem.Text = "Parse Input";
       this.parseToolStripMenuItem.Click += new System.EventHandler(this.btnParse_Click);
       // 
       // tabPage4
       // 
       this.tabPage4.Controls.Add(this.edInput);
-      this.tabPage4.Location = new System.Drawing.Point(4, 32);
+      this.tabPage4.Location = new System.Drawing.Point(4, 22);
       this.tabPage4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabPage4.Name = "tabPage4";
       this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.tabPage4.Size = new System.Drawing.Size(495, 500);
+      this.tabPage4.Size = new System.Drawing.Size(495, 510);
       this.tabPage4.TabIndex = 1;
       this.tabPage4.Text = "Input";
       this.tabPage4.UseVisualStyleBackColor = true;
@@ -589,12 +611,32 @@
       this.edInput.RightBracket2 = '}';
       this.edInput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
       this.edInput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("edInput.ServiceColors")));
-      this.edInput.Size = new System.Drawing.Size(489, 492);
+      this.edInput.Size = new System.Drawing.Size(489, 502);
       this.edInput.TabIndex = 0;
       this.edInput.Zoom = 100;
       // 
+      // tabPage5
+      // 
+      this.tabPage5.Controls.Add(this.wbOut);
+      this.tabPage5.Location = new System.Drawing.Point(4, 32);
+      this.tabPage5.Name = "tabPage5";
+      this.tabPage5.Size = new System.Drawing.Size(495, 500);
+      this.tabPage5.TabIndex = 2;
+      this.tabPage5.Text = "Viewer";
+      this.tabPage5.UseVisualStyleBackColor = true;
+      // 
+      // wbOut
+      // 
+      this.wbOut.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.wbOut.Location = new System.Drawing.Point(0, 0);
+      this.wbOut.MinimumSize = new System.Drawing.Size(20, 20);
+      this.wbOut.Name = "wbOut";
+      this.wbOut.Size = new System.Drawing.Size(495, 500);
+      this.wbOut.TabIndex = 0;
+      // 
       // panel3
       // 
+      this.panel3.Controls.Add(this.cbTrack);
       this.panel3.Controls.Add(this.btnClear);
       this.panel3.Controls.Add(this.btnPaste);
       this.panel3.Controls.Add(this.btnParse);
@@ -667,7 +709,7 @@
       this.props.DocCommentDescription.AutoEllipsis = true;
       this.props.DocCommentDescription.Cursor = System.Windows.Forms.Cursors.Default;
       this.props.DocCommentDescription.Location = new System.Drawing.Point(4, 29);
-      this.props.DocCommentDescription.Margin = new System.Windows.Forms.Padding(72, 0, 72, 0);
+      this.props.DocCommentDescription.Margin = new System.Windows.Forms.Padding(122, 0, 122, 0);
       this.props.DocCommentDescription.Name = "";
       this.props.DocCommentDescription.Size = new System.Drawing.Size(752, 40);
       this.props.DocCommentDescription.TabIndex = 1;
@@ -678,7 +720,7 @@
       this.props.DocCommentTitle.Cursor = System.Windows.Forms.Cursors.Default;
       this.props.DocCommentTitle.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
       this.props.DocCommentTitle.Location = new System.Drawing.Point(4, 4);
-      this.props.DocCommentTitle.Margin = new System.Windows.Forms.Padding(72, 0, 72, 0);
+      this.props.DocCommentTitle.Margin = new System.Windows.Forms.Padding(122, 0, 122, 0);
       this.props.DocCommentTitle.Name = "";
       this.props.DocCommentTitle.Size = new System.Drawing.Size(752, 25);
       this.props.DocCommentTitle.TabIndex = 0;
@@ -702,7 +744,7 @@
       this.props.ToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
       this.props.ToolStrip.Location = new System.Drawing.Point(0, 1);
       this.props.ToolStrip.Name = "";
-      this.props.ToolStrip.Padding = new System.Windows.Forms.Padding(48, 0, 32, 0);
+      this.props.ToolStrip.Padding = new System.Windows.Forms.Padding(81, 0, 54, 0);
       this.props.ToolStrip.Size = new System.Drawing.Size(760, 31);
       this.props.ToolStrip.TabIndex = 1;
       this.props.ToolStrip.TabStop = true;
@@ -714,35 +756,17 @@
       this.odMain.CheckFileExists = false;
       this.odMain.DefaultExt = "cdf";
       // 
-      // pb2
+      // cbTrack
       // 
-      this.pb2.ForeColor = System.Drawing.Color.Blue;
-      this.pb2.Location = new System.Drawing.Point(122, 226);
-      this.pb2.Maximum = 10000;
-      this.pb2.Name = "pb2";
-      this.pb2.Size = new System.Drawing.Size(708, 28);
-      this.pb2.TabIndex = 11;
-      this.pb2.Value = 500;
-      this.pb2.Visible = false;
-      // 
-      // tabPage5
-      // 
-      this.tabPage5.Controls.Add(this.wbOut);
-      this.tabPage5.Location = new System.Drawing.Point(4, 32);
-      this.tabPage5.Name = "tabPage5";
-      this.tabPage5.Size = new System.Drawing.Size(495, 500);
-      this.tabPage5.TabIndex = 2;
-      this.tabPage5.Text = "Viewer";
-      this.tabPage5.UseVisualStyleBackColor = true;
-      // 
-      // wbOut
-      // 
-      this.wbOut.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.wbOut.Location = new System.Drawing.Point(0, 0);
-      this.wbOut.MinimumSize = new System.Drawing.Size(20, 20);
-      this.wbOut.Name = "wbOut";
-      this.wbOut.Size = new System.Drawing.Size(495, 500);
-      this.wbOut.TabIndex = 0;
+      this.cbTrack.AutoSize = true;
+      this.cbTrack.Checked = true;
+      this.cbTrack.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.cbTrack.Location = new System.Drawing.Point(402, 15);
+      this.cbTrack.Name = "cbTrack";
+      this.cbTrack.Size = new System.Drawing.Size(127, 27);
+      this.cbTrack.TabIndex = 8;
+      this.cbTrack.Text = "Viewer Track";
+      this.cbTrack.UseVisualStyleBackColor = true;
       // 
       // Form1
       // 
@@ -783,9 +807,9 @@
       this.contextMenuStrip2.ResumeLayout(false);
       this.tabPage4.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.edInput)).EndInit();
+      this.tabPage5.ResumeLayout(false);
       this.panel3.ResumeLayout(false);
       this.panel3.PerformLayout();
-      this.tabPage5.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -840,6 +864,8 @@
     private System.Windows.Forms.ProgressBar pb2;
     private System.Windows.Forms.TabPage tabPage5;
     private System.Windows.Forms.WebBrowser wbOut;
+    private System.Windows.Forms.ToolStripMenuItem generatePromptToolStripMenuItem;
+    private System.Windows.Forms.CheckBox cbTrack;
   }
 }
 

@@ -29,6 +29,7 @@ namespace Prompter {
     private Item _inEditItem = null;
     private Variables _variables;
     private bool _inReorder = false;
+    private bool _doPrompt = true;
     public Form1() {
       InitializeComponent();
       _defaultDir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"\\PrompterFiles";
@@ -143,7 +144,6 @@ namespace Prompter {
       DialogResult res = odMain.ShowDialog();
       if (res == DialogResult.OK) {
         _variables["FileNames"].Value = odMain.FileName+Environment.NewLine+ _variables["FileNames"].Value;
-        edFileName.Text = odMain.FileName;
         edFileName.Text = odMain.FileName;
       }
     }
@@ -555,6 +555,20 @@ namespace Prompter {
         ||_inEditItem.TypeId==(int)TnType.Section
         ||_inEditItem.TypeId==(int)TnType.SubSection
       );
+      generatePromptToolStripMenuItem.Visible = (tabControl2.SelectedIndex==0);
+      if(generatePromptToolStripMenuItem.Visible) {
+        if (generatePromptToolStripMenuItem.Checked != _doPrompt) {
+          generatePromptToolStripMenuItem.Checked=_doPrompt; 
+          if (!generatePromptToolStripMenuItem.Enabled) generatePromptToolStripMenuItem.Enabled= true;
+        }
+      }      
+    }
+    private void generatePromptToolStripMenuItem_Click(object sender, EventArgs e) {
+      _doPrompt = !_doPrompt;
+    }
+
+    private void cbPrompt_CheckedChanged(object sender, EventArgs e) {
+      
     }
 
     private void copyToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -576,10 +590,9 @@ namespace Prompter {
       if(_inEditItem==null) { return; }      
       _=_itemCaster.SaveNewChildItemsFromText(_inEditItem, _types[(int)TnType.Template], "Template");      
     }
-
-
+        
     private void ProcessEditOut(Item it) {
-      if (cbPrompt.Checked &&it.ValueTypeId>0) { 
+      if (_doPrompt &&it.ValueTypeId>0) { 
         string promptTemplate = _types[it.ValueTypeId].Desc;
         if (promptTemplate ==String.Empty && it.ValueTypeId==47) {  // 47 is current node is template.
           promptTemplate = it.Text;
@@ -618,8 +631,10 @@ namespace Prompter {
           }
         }
         edOutput.Text = s+Cs.nl;
-      }      
-      wbOut.DocumentText = ""+Cs.GetRichTextEditor(edOutput.Text);
+      }  
+      if(cbTrack.Checked) { 
+        wbOut.DocumentText = ""+it.GetRichTextEditor(_types);
+      }
     }
 
     private string GetChildContent(Item it) { 

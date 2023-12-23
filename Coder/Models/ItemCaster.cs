@@ -1,13 +1,17 @@
-﻿using System;
+﻿using FastColoredTextBoxNS;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Prompter.Models {
   public class Item:TreeNode {
@@ -158,11 +162,11 @@ namespace Prompter.Models {
   }
 
   public class ItemCaster { 
-    private TreeView _tv;
+    private System.Windows.Forms.TreeView _tv;
     private CryptoVars _cryptoVars;
     private Items _items;
     private Form1 _ownerForm;
-    public ItemCaster(Form1 ownerform, TreeView tv, CryptoKey key, string fileName) {
+    public ItemCaster(Form1 ownerform, System.Windows.Forms.TreeView tv, CryptoKey key, string fileName) {
       _items = new Items();
       _cryptoVars=new CryptoVars(ownerform);
       _tv = tv;
@@ -181,7 +185,7 @@ namespace Prompter.Models {
       }
     }
 
-    public void LoadTreeviewItemsAsync(System.Windows.Forms.TreeView ownerItem, ProgressBar pb) {      
+    public void LoadTreeviewItemsAsync(System.Windows.Forms.TreeView ownerItem, System.Windows.Forms.ProgressBar pb) {      
       ownerItem.Nodes.Clear();
       decimal step = (pb.Maximum - pb.Value - 1); 
       int val = pb.Value;
@@ -336,6 +340,54 @@ namespace Prompter.Models {
   }
 
   public static class Ic {
+
+    public static string GetChildContent(this Item it) {
+      StringBuilder s = new StringBuilder();
+      if ((it.TypeId == (int)TnType.Project)||(it.TypeId == (int)TnType.Chapters)) { 
+        s.Append( "<UL class=\"text2\">");
+        foreach(Item c in it.Nodes) {
+          s.Append( "<LI >"+c.Text+"<br/>"+ c.GetChildContent()+"</LI>");
+        }
+        s.Append("</UL>");
+      }else {        
+        foreach(Item c in it.Nodes) {
+          s.Append("<p class=\"text3\" style=\"padding-bottom:10px;\">");
+          s.Append(c.Text );
+          s.Append("</p>");
+        }        
+      }
+      return s.ToString();
+    }
+    public static string GetRichTextEditor(this Item it, Types types) {
+      string pit="";
+      string gpit="";
+      string sit = it.Text;
+      string tc = "text1";
+      if(it.OwnerId>0) {
+        if(it.Parent!=null) {
+          pit=it.Parent.Text;
+          if(((Item)it.Parent).OwnerId>0&&it.Parent.Parent!=null) {
+            gpit=it.Parent.Parent.Text;
+          }
+        }
+      }
+      string s = it.GetChildContent();
+      string title = gpit != "" ? gpit : pit != "" ? pit : sit; 
+      string title2 = gpit != "" ? pit : pit != "" ? sit : "";
+      title2 = title2==""?"": $"<div class=\"text2\">{title2}</div><br/>\r\n";
+      string sr = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n"+
+        $"<head>\r\n  <meta charset=\"UTF-8\"/>\r\n  <title>{title}</title>\r\n"+
+        "<style>\r\n"+
+        "  .text1 { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16.2pt; }\r\n"+
+        "  .text2 { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.2pt; }\r\n"+
+        "  .text3 { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.2pt; }\r\n"+        
+        "</style>\r\n"+
+        "</head>\r\n"+
+        $"<body>\r\n"+
+          title2 + s +
+        "</body>\r\n</html>";
+      return sr;
+    }
     public static string GenerateSqlCreateTable(this Item tnTable, Types types) {
       string r = $"-- a table create {Cs.nl}Create Table {tnTable.Text}({Cs.nl}";
       foreach(Item tn in tnTable.Nodes) {

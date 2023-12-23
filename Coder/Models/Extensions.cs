@@ -106,10 +106,7 @@ namespace Prompter.Models {
       return result;
     }
 
-    public static string GetRichTextEditor(string editorContent) { 
-      string s = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"UTF-8\">\r\n  <title>Summernote</title>\r\n  <link href=\"http://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\" rel=\"stylesheet\">\r\n  <script src=\"http://code.jquery.com/jquery-3.5.1.min.js\"></script>\r\n  <script src=\"http://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>\r\n  <link href=\"http://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css\" rel=\"stylesheet\">\r\n  <script src=\"http://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js\"></script>\r\n</head>\r\n<body>\r\n  <div id=\"summernote\">"+editorContent+"</div>\r\n  <script>\r\n    $(document).ready(function() {\r\n        $('#summernote').summernote();\r\n    });\r\n  </script>\r\n</body>\r\n</html>";
-      return s;
-      }
+
 
   }
 
