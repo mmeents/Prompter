@@ -22,14 +22,6 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Coder\Prompter.csproj">
-      <Name>Prompter</Name>
-      <Project>{dd3e6f4c-042e-4511-929d-4477727cc879}</Project>
-      <Private>True</Private>
-      <OutputsToImport>PrimaryOutput;References</OutputsToImport>
-    </ProjectReference>
-  </ItemGroup>
   <Target Name="Build">
     <Error Text="This project requires Advanced Installer tool. Please download it from https://www.advancedinstaller.com/download.html" />
   </Target>

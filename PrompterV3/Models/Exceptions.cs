@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Prompter.Models {
+
+namespace PrompterV3.Models {
   /// <summary>
   ///   Example of how to create a decendent exception. 
   /// </summary>
   [Serializable]
-  public class CryptoKeyNotSetException : Exception {
+  public class CryptoKeyNotSetException:Exception {
     public CryptoKeyNotSetException() : base() { }
     public CryptoKeyNotSetException(string message) : base(message) { }
     public CryptoKeyNotSetException(string message, Exception innerException) : base(message, innerException) { }
@@ -19,4 +16,5 @@ namespace Prompter.Models {
       base.GetObjectData(info, context);
     }
   }
+
 }
