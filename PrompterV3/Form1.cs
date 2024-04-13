@@ -706,6 +706,8 @@ namespace PrompterV3 {
       edOutputText.Text =it.GetOutputTextEditor(_types, _itemCaster);
     }
 
+    private void pbMain_Click(object sender, EventArgs e) {
 
+    }
   }
 }

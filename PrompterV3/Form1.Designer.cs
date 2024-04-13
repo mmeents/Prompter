@@ -35,6 +35,7 @@
       this.edFileName = new System.Windows.Forms.ComboBox();
       this.tabPage2 = new System.Windows.Forms.TabPage();
       this.panel4 = new System.Windows.Forms.Panel();
+      this.lbFocusNotes = new System.Windows.Forms.Label();
       this.lbFocus = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -65,6 +66,7 @@
       this.asEssayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.asEssayTopicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.asThesisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.asThesisTopicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.asThesisClaimsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.AsClaimsEvidenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabPage6 = new System.Windows.Forms.TabPage();
@@ -77,8 +79,6 @@
       this.tabPage4 = new System.Windows.Forms.TabPage();
       this.edError2 = new System.Windows.Forms.TextBox();
       this.odMain = new System.Windows.Forms.OpenFileDialog();
-      this.asThesisTopicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.lbFocusNotes = new System.Windows.Forms.Label();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.tabPage2.SuspendLayout();
@@ -128,11 +128,11 @@
       this.tabPage1.Controls.Add(this.btnBrowse);
       this.tabPage1.Controls.Add(this.label1);
       this.tabPage1.Controls.Add(this.edFileName);
-      this.tabPage1.Location = new System.Drawing.Point(4, 29);
+      this.tabPage1.Location = new System.Drawing.Point(4, 24);
       this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabPage1.Name = "tabPage1";
       this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.tabPage1.Size = new System.Drawing.Size(900, 575);
+      this.tabPage1.Size = new System.Drawing.Size(900, 580);
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "Setup";
       this.tabPage1.UseVisualStyleBackColor = true;
@@ -193,7 +193,7 @@
       this.label1.AutoSize = true;
       this.label1.Location = new System.Drawing.Point(8, 18);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(141, 20);
+      this.label1.Size = new System.Drawing.Size(112, 15);
       this.label1.TabIndex = 3;
       this.label1.Text = "Project File to open:";
       // 
@@ -205,18 +205,18 @@
       this.edFileName.Location = new System.Drawing.Point(155, 15);
       this.edFileName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.edFileName.Name = "edFileName";
-      this.edFileName.Size = new System.Drawing.Size(655, 28);
+      this.edFileName.Size = new System.Drawing.Size(655, 23);
       this.edFileName.TabIndex = 2;
       // 
       // tabPage2
       // 
       this.tabPage2.Controls.Add(this.panel4);
       this.tabPage2.Controls.Add(this.splitContainer1);
-      this.tabPage2.Location = new System.Drawing.Point(4, 29);
+      this.tabPage2.Location = new System.Drawing.Point(4, 24);
       this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.tabPage2.Name = "tabPage2";
       this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-      this.tabPage2.Size = new System.Drawing.Size(900, 575);
+      this.tabPage2.Size = new System.Drawing.Size(900, 580);
       this.tabPage2.TabIndex = 1;
       this.tabPage2.Text = "Outline";
       this.tabPage2.UseVisualStyleBackColor = true;
@@ -232,12 +232,21 @@
       this.panel4.Size = new System.Drawing.Size(894, 50);
       this.panel4.TabIndex = 1;
       // 
+      // lbFocusNotes
+      // 
+      this.lbFocusNotes.AutoSize = true;
+      this.lbFocusNotes.Location = new System.Drawing.Point(10, 24);
+      this.lbFocusNotes.Name = "lbFocusNotes";
+      this.lbFocusNotes.Size = new System.Drawing.Size(72, 15);
+      this.lbFocusNotes.TabIndex = 2;
+      this.lbFocusNotes.Text = "Focus Notes";
+      // 
       // lbFocus
       // 
       this.lbFocus.AutoSize = true;
       this.lbFocus.Location = new System.Drawing.Point(83, 4);
       this.lbFocus.Name = "lbFocus";
-      this.lbFocus.Size = new System.Drawing.Size(59, 20);
+      this.lbFocus.Size = new System.Drawing.Size(48, 15);
       this.lbFocus.TabIndex = 1;
       this.lbFocus.Text = "lbFocus";
       // 
@@ -246,7 +255,7 @@
       this.label2.AutoSize = true;
       this.label2.Location = new System.Drawing.Point(10, 4);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(66, 20);
+      this.label2.Size = new System.Drawing.Size(54, 15);
       this.label2.TabIndex = 0;
       this.label2.Text = "Focused:";
       // 
@@ -327,7 +336,7 @@
             this.toolStripMenuItem1,
             this.deleteToolStripMenuItem});
       this.msBuilder.Name = "contextMenuStrip1";
-      this.msBuilder.Size = new System.Drawing.Size(159, 130);
+      this.msBuilder.Size = new System.Drawing.Size(139, 120);
       this.msBuilder.Opening += new System.ComponentModel.CancelEventHandler(this.msBuilder_Opening);
       // 
       // addTemplateToolStripMenuItem
@@ -337,61 +346,61 @@
             this.essayToolStripMenuItem,
             this.templateToolStripMenuItem});
       this.addTemplateToolStripMenuItem.Name = "addTemplateToolStripMenuItem";
-      this.addTemplateToolStripMenuItem.Size = new System.Drawing.Size(158, 24);
+      this.addTemplateToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
       this.addTemplateToolStripMenuItem.Text = "Add";
       this.addTemplateToolStripMenuItem.Click += new System.EventHandler(this.addTemplateToolStripMenuItem_Click);
       // 
       // projectToolStripMenuItem
       // 
       this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-      this.projectToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+      this.projectToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
       this.projectToolStripMenuItem.Text = "Project";
       this.projectToolStripMenuItem.Click += new System.EventHandler(this.projectToolStripMenuItem_Click);
       // 
       // essayToolStripMenuItem
       // 
       this.essayToolStripMenuItem.Name = "essayToolStripMenuItem";
-      this.essayToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+      this.essayToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
       this.essayToolStripMenuItem.Text = "Essay";
       this.essayToolStripMenuItem.Click += new System.EventHandler(this.essayToolStripMenuItem_Click);
       // 
       // templateToolStripMenuItem
       // 
       this.templateToolStripMenuItem.Name = "templateToolStripMenuItem";
-      this.templateToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+      this.templateToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
       this.templateToolStripMenuItem.Text = "Template";
       this.templateToolStripMenuItem.Click += new System.EventHandler(this.templateToolStripMenuItem_Click);
       // 
       // saveToolStripMenuItem
       // 
       this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-      this.saveToolStripMenuItem.Size = new System.Drawing.Size(158, 24);
+      this.saveToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
       this.saveToolStripMenuItem.Text = "Save";
       this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
       // 
       // moveUpToolStripMenuItem
       // 
       this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
-      this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(158, 24);
+      this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
       this.moveUpToolStripMenuItem.Text = "Move Up";
       this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
       // 
       // moveDownToolStripMenuItem
       // 
       this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
-      this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(158, 24);
+      this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
       this.moveDownToolStripMenuItem.Text = "Move Down";
       this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
       // 
       // toolStripMenuItem1
       // 
       this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-      this.toolStripMenuItem1.Size = new System.Drawing.Size(155, 6);
+      this.toolStripMenuItem1.Size = new System.Drawing.Size(135, 6);
       // 
       // deleteToolStripMenuItem
       // 
       this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-      this.deleteToolStripMenuItem.Size = new System.Drawing.Size(158, 24);
+      this.deleteToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
       this.deleteToolStripMenuItem.Text = "Delete";
       this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
       // 
@@ -440,6 +449,7 @@
       this.pbMain.TabIndex = 11;
       this.pbMain.Value = 500;
       this.pbMain.Visible = false;
+      this.pbMain.Click += new System.EventHandler(this.pbMain_Click);
       // 
       // tabControl3
       // 
@@ -457,11 +467,11 @@
       // tabPage5
       // 
       this.tabPage5.Controls.Add(this.edInput);
-      this.tabPage5.Location = new System.Drawing.Point(4, 29);
+      this.tabPage5.Location = new System.Drawing.Point(4, 24);
       this.tabPage5.Margin = new System.Windows.Forms.Padding(0);
       this.tabPage5.Name = "tabPage5";
       this.tabPage5.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-      this.tabPage5.Size = new System.Drawing.Size(486, 288);
+      this.tabPage5.Size = new System.Drawing.Size(486, 293);
       this.tabPage5.TabIndex = 0;
       this.tabPage5.Text = "Input Text";
       this.tabPage5.UseVisualStyleBackColor = true;
@@ -479,22 +489,21 @@
         '\"',
         '\'',
         '\''};
-      this.edInput.AutoScrollMinSize = new System.Drawing.Size(31, 18);
+      this.edInput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
       this.edInput.BackBrush = null;
-      this.edInput.CharHeight = 18;
-      this.edInput.CharWidth = 10;
+      this.edInput.CharHeight = 14;
+      this.edInput.CharWidth = 8;
       this.edInput.ContextMenuStrip = this.msEditors;
       this.edInput.Cursor = System.Windows.Forms.Cursors.IBeam;
       this.edInput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
       this.edInput.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.edInput.Font = new System.Drawing.Font("Courier New", 9.75F);
       this.edInput.IsReplaceMode = false;
       this.edInput.Location = new System.Drawing.Point(0, 3);
       this.edInput.Name = "edInput";
       this.edInput.Paddings = new System.Windows.Forms.Padding(0);
       this.edInput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
       this.edInput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("edInput.ServiceColors")));
-      this.edInput.Size = new System.Drawing.Size(486, 285);
+      this.edInput.Size = new System.Drawing.Size(486, 290);
       this.edInput.TabIndex = 0;
       this.edInput.Zoom = 100;
       // 
@@ -507,27 +516,27 @@
             this.clearToolStripMenuItem,
             this.parseInputToolStripMenuItem});
       this.msEditors.Name = "msEditors";
-      this.msEditors.Size = new System.Drawing.Size(151, 100);
+      this.msEditors.Size = new System.Drawing.Size(134, 92);
       this.msEditors.Opening += new System.ComponentModel.CancelEventHandler(this.msEditors_Opening);
       // 
       // copyToolStripMenuItem
       // 
       this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-      this.copyToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.copyToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
       this.copyToolStripMenuItem.Text = "Copy";
       this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
       // 
       // pasteToolStripMenuItem
       // 
       this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-      this.pasteToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.pasteToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
       this.pasteToolStripMenuItem.Text = "Paste";
       this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
       // 
       // clearToolStripMenuItem
       // 
       this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-      this.clearToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.clearToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
       this.clearToolStripMenuItem.Text = "Clear";
       this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
       // 
@@ -542,60 +551,67 @@
             this.asThesisClaimsToolStripMenuItem,
             this.AsClaimsEvidenceToolStripMenuItem});
       this.parseInputToolStripMenuItem.Name = "parseInputToolStripMenuItem";
-      this.parseInputToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+      this.parseInputToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
       this.parseInputToolStripMenuItem.Text = "Parse Input";
       this.parseInputToolStripMenuItem.Click += new System.EventHandler(this.parseInputToolStripMenuItem_Click);
       // 
       // asTemplateToolStripMenuItem
       // 
       this.asTemplateToolStripMenuItem.Name = "asTemplateToolStripMenuItem";
-      this.asTemplateToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.asTemplateToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
       this.asTemplateToolStripMenuItem.Text = "As Template";
       this.asTemplateToolStripMenuItem.Click += new System.EventHandler(this.asTemplateToolStripMenuItem_Click);
       // 
       // asEssayToolStripMenuItem
       // 
       this.asEssayToolStripMenuItem.Name = "asEssayToolStripMenuItem";
-      this.asEssayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.asEssayToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
       this.asEssayToolStripMenuItem.Text = "As Essay";
       this.asEssayToolStripMenuItem.Click += new System.EventHandler(this.asEssayToolStripMenuItem_Click);
       // 
       // asEssayTopicToolStripMenuItem
       // 
       this.asEssayTopicToolStripMenuItem.Name = "asEssayTopicToolStripMenuItem";
-      this.asEssayTopicToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.asEssayTopicToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
       this.asEssayTopicToolStripMenuItem.Text = "As Essay Topic";
       this.asEssayTopicToolStripMenuItem.Click += new System.EventHandler(this.asEssayTopicToolStripMenuItem_Click);
       // 
       // asThesisToolStripMenuItem
       // 
       this.asThesisToolStripMenuItem.Name = "asThesisToolStripMenuItem";
-      this.asThesisToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.asThesisToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
       this.asThesisToolStripMenuItem.Text = "As Thesis";
       this.asThesisToolStripMenuItem.Click += new System.EventHandler(this.asThesisToolStripMenuItem_Click);
+      // 
+      // asThesisTopicToolStripMenuItem
+      // 
+      this.asThesisTopicToolStripMenuItem.Name = "asThesisTopicToolStripMenuItem";
+      this.asThesisTopicToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+      this.asThesisTopicToolStripMenuItem.Text = "As Essay Thesis Topic";
+      this.asThesisTopicToolStripMenuItem.Click += new System.EventHandler(this.asThesisTopicToolStripMenuItem_Click);
       // 
       // asThesisClaimsToolStripMenuItem
       // 
       this.asThesisClaimsToolStripMenuItem.Name = "asThesisClaimsToolStripMenuItem";
-      this.asThesisClaimsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.asThesisClaimsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
       this.asThesisClaimsToolStripMenuItem.Text = "As Thesis Claims";
       this.asThesisClaimsToolStripMenuItem.Click += new System.EventHandler(this.asThesisClaimsToolStripMenuItem_Click);
       // 
       // AsClaimsEvidenceToolStripMenuItem
       // 
       this.AsClaimsEvidenceToolStripMenuItem.Name = "AsClaimsEvidenceToolStripMenuItem";
-      this.AsClaimsEvidenceToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.AsClaimsEvidenceToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
       this.AsClaimsEvidenceToolStripMenuItem.Text = "As Claims Evidence";
       this.AsClaimsEvidenceToolStripMenuItem.Click += new System.EventHandler(this.AsClaimsEvidenceToolStripMenuItem_Click);
       // 
       // tabPage6
       // 
       this.tabPage6.Controls.Add(this.edOutputText);
-      this.tabPage6.Location = new System.Drawing.Point(4, 29);
+      this.tabPage6.Location = new System.Drawing.Point(4, 22);
       this.tabPage6.Margin = new System.Windows.Forms.Padding(0);
       this.tabPage6.Name = "tabPage6";
       this.tabPage6.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-      this.tabPage6.Size = new System.Drawing.Size(486, 288);
+      this.tabPage6.Size = new System.Drawing.Size(486, 295);
       this.tabPage6.TabIndex = 1;
       this.tabPage6.Text = "Output Text";
       this.tabPage6.UseVisualStyleBackColor = true;
@@ -613,21 +629,22 @@
         '\"',
         '\'',
         '\''};
-      this.edOutputText.AutoScrollMinSize = new System.Drawing.Size(0, 18);
+      this.edOutputText.AutoScrollMinSize = new System.Drawing.Size(0, 14);
       this.edOutputText.BackBrush = null;
-      this.edOutputText.CharHeight = 18;
-      this.edOutputText.CharWidth = 10;
+      this.edOutputText.CharHeight = 14;
+      this.edOutputText.CharWidth = 8;
       this.edOutputText.ContextMenuStrip = this.msEditors;
       this.edOutputText.Cursor = System.Windows.Forms.Cursors.IBeam;
       this.edOutputText.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
       this.edOutputText.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.edOutputText.Font = new System.Drawing.Font("Courier New", 9.75F);
       this.edOutputText.IsReplaceMode = false;
       this.edOutputText.Location = new System.Drawing.Point(0, 3);
       this.edOutputText.Name = "edOutputText";
       this.edOutputText.Paddings = new System.Windows.Forms.Padding(0);
       this.edOutputText.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
       this.edOutputText.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("edOutputText.ServiceColors")));
-      this.edOutputText.Size = new System.Drawing.Size(486, 285);
+      this.edOutputText.Size = new System.Drawing.Size(486, 292);
       this.edOutputText.TabIndex = 0;
       this.edOutputText.WordWrap = true;
       this.edOutputText.Zoom = 100;
@@ -635,9 +652,9 @@
       // tabPage7
       // 
       this.tabPage7.Controls.Add(this.wbOut);
-      this.tabPage7.Location = new System.Drawing.Point(4, 29);
+      this.tabPage7.Location = new System.Drawing.Point(4, 22);
       this.tabPage7.Name = "tabPage7";
-      this.tabPage7.Size = new System.Drawing.Size(486, 288);
+      this.tabPage7.Size = new System.Drawing.Size(486, 295);
       this.tabPage7.TabIndex = 2;
       this.tabPage7.Text = "Browser";
       this.tabPage7.UseVisualStyleBackColor = true;
@@ -648,7 +665,7 @@
       this.wbOut.Location = new System.Drawing.Point(0, 0);
       this.wbOut.MinimumSize = new System.Drawing.Size(20, 20);
       this.wbOut.Name = "wbOut";
-      this.wbOut.Size = new System.Drawing.Size(486, 288);
+      this.wbOut.Size = new System.Drawing.Size(486, 295);
       this.wbOut.TabIndex = 0;
       // 
       // tabControl2
@@ -669,7 +686,7 @@
       this.tabPage3.Location = new System.Drawing.Point(4, 4);
       this.tabPage3.Name = "tabPage3";
       this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage3.Size = new System.Drawing.Size(883, 158);
+      this.tabPage3.Size = new System.Drawing.Size(883, 163);
       this.tabPage3.TabIndex = 0;
       this.tabPage3.Text = "Properties";
       this.tabPage3.UseVisualStyleBackColor = true;
@@ -681,10 +698,10 @@
       // 
       this.props.DocCommentDescription.AutoEllipsis = true;
       this.props.DocCommentDescription.Cursor = System.Windows.Forms.Cursors.Default;
-      this.props.DocCommentDescription.Location = new System.Drawing.Point(4, 32);
-      this.props.DocCommentDescription.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+      this.props.DocCommentDescription.Location = new System.Drawing.Point(4, 24);
+      this.props.DocCommentDescription.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
       this.props.DocCommentDescription.Name = "";
-      this.props.DocCommentDescription.Size = new System.Drawing.Size(0, 61);
+      this.props.DocCommentDescription.Size = new System.Drawing.Size(0, 43);
       this.props.DocCommentDescription.TabIndex = 1;
       this.props.DocCommentImage = null;
       // 
@@ -692,10 +709,10 @@
       // 
       this.props.DocCommentTitle.Cursor = System.Windows.Forms.Cursors.Default;
       this.props.DocCommentTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-      this.props.DocCommentTitle.Location = new System.Drawing.Point(4, 5);
-      this.props.DocCommentTitle.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+      this.props.DocCommentTitle.Location = new System.Drawing.Point(4, 3);
+      this.props.DocCommentTitle.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
       this.props.DocCommentTitle.Name = "";
-      this.props.DocCommentTitle.Size = new System.Drawing.Size(0, 22);
+      this.props.DocCommentTitle.Size = new System.Drawing.Size(0, 18);
       this.props.DocCommentTitle.TabIndex = 0;
       this.props.DocCommentTitle.UseMnemonic = false;
       this.props.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -703,7 +720,7 @@
       this.props.Location = new System.Drawing.Point(3, 3);
       this.props.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.props.Name = "props";
-      this.props.Size = new System.Drawing.Size(877, 152);
+      this.props.Size = new System.Drawing.Size(877, 157);
       this.props.TabIndex = 0;
       // 
       // 
@@ -718,8 +735,8 @@
       this.props.ToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
       this.props.ToolStrip.Location = new System.Drawing.Point(0, 1);
       this.props.ToolStrip.Name = "";
-      this.props.ToolStrip.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
-      this.props.ToolStrip.Size = new System.Drawing.Size(877, 31);
+      this.props.ToolStrip.Padding = new System.Windows.Forms.Padding(6, 0, 1, 0);
+      this.props.ToolStrip.Size = new System.Drawing.Size(877, 25);
       this.props.ToolStrip.TabIndex = 1;
       this.props.ToolStrip.TabStop = true;
       this.props.ToolStrip.Text = "PropertyGridToolBar";
@@ -731,7 +748,7 @@
       this.tabPage4.Location = new System.Drawing.Point(4, 4);
       this.tabPage4.Name = "tabPage4";
       this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage4.Size = new System.Drawing.Size(883, 219);
+      this.tabPage4.Size = new System.Drawing.Size(883, 163);
       this.tabPage4.TabIndex = 1;
       this.tabPage4.Text = "Log";
       this.tabPage4.UseVisualStyleBackColor = true;
@@ -744,7 +761,7 @@
       this.edError2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
       this.edError2.Multiline = true;
       this.edError2.Name = "edError2";
-      this.edError2.Size = new System.Drawing.Size(877, 213);
+      this.edError2.Size = new System.Drawing.Size(877, 157);
       this.edError2.TabIndex = 2;
       // 
       // odMain
@@ -754,25 +771,9 @@
       this.odMain.Filter = "PrompterV3|*.pv3";
       this.odMain.Title = "Open Archive";
       // 
-      // asThesisTopicToolStripMenuItem
-      // 
-      this.asThesisTopicToolStripMenuItem.Name = "asThesisTopicToolStripMenuItem";
-      this.asThesisTopicToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
-      this.asThesisTopicToolStripMenuItem.Text = "As Essay Thesis Topic";
-      this.asThesisTopicToolStripMenuItem.Click += new System.EventHandler(this.asThesisTopicToolStripMenuItem_Click);
-      // 
-      // lbFocusNotes
-      // 
-      this.lbFocusNotes.AutoSize = true;
-      this.lbFocusNotes.Location = new System.Drawing.Point(10, 24);
-      this.lbFocusNotes.Name = "lbFocusNotes";
-      this.lbFocusNotes.Size = new System.Drawing.Size(89, 20);
-      this.lbFocusNotes.TabIndex = 2;
-      this.lbFocusNotes.Text = "Focus Notes";
-      // 
       // Form1
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(908, 608);
       this.Controls.Add(this.tabControl1);

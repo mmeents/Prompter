@@ -563,11 +563,11 @@ namespace PrompterV3.Models {
         }
       }
       string s =  it.GetChildContent(caster);
-      string title = gpit != "" ? gpit : pit != "" ? pit : sit; 
-      string title2 = gpit != "" ? pit : pit != "" ? pit : sit;
-      title2 = title2==""?"": $"<div class=\"text2\">{title2}</div><br/>\r\n";
+      sit = $"<div class=\"text2\">{sit}</div><br/>";
+      pit = pit == "" ? "" : $"<div class=\"text2\">{pit}</div><br/>\r\n";
+      gpit = gpit==""?"": $"<div class=\"text2\">{gpit}</div><br/>\r\n";
       string sr = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n"+
-        $"<head>\r\n  <meta charset=\"UTF-8\"/>\r\n  <title>{title}</title>\r\n"+
+        $"<head>\r\n  <meta charset=\"UTF-8\"/>\r\n  <title>{sit}</title>\r\n"+
         "<style>\r\n"+
         "  .text1 { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16.2pt; }\r\n"+
         "  .text2 { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.2pt; }\r\n"+
@@ -575,7 +575,7 @@ namespace PrompterV3.Models {
         "</style>\r\n"+
         "</head>\r\n"+
         $"<body>\r\n"+
-          title2 + s +
+          gpit+pit+sit + s +
         "</body>\r\n</html>";
       return sr;
     }
