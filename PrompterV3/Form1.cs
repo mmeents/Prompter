@@ -197,6 +197,7 @@ namespace PrompterV3 {
         props.Item.Clear();
         props.Refresh();
         lbFocus.Text="Select Node to focus";
+        _inEditItem = null;
       } else if(e.TabPageIndex==1) {
         try {
           _fileName=edFileName.Text;
