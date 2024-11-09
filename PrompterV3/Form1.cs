@@ -17,6 +17,7 @@ using System.Reflection.Emit;
 using System.Net;
 using PropertyGridEx;
 using FastColoredTextBoxNS;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PrompterV3 {
   public partial class Form1:Form {
@@ -35,6 +36,7 @@ namespace PrompterV3 {
     private Types _types;
     private ItemCaster _itemCaster;
     private Item _inEditItem = null;
+    private Item _copiedItem = null;
     private bool _inReorder = false;
     private bool _doPrompt = true;
     #endregion
@@ -368,6 +370,9 @@ namespace PrompterV3 {
       } else {
         moveDownToolStripMenuItem.Enabled=false;
       }
+
+      copyItemToolStripMenuItem.Enabled = _inEditItem != null;
+      pasteItemToolStripMenuItem.Enabled = (_copiedItem != null && _inEditItem is Item selectedItem);
     }
     private void addTemplateToolStripMenuItem_Click(object sender, EventArgs e) {
     }
@@ -709,6 +714,20 @@ namespace PrompterV3 {
 
     private void pbMain_Click(object sender, EventArgs e) {
 
+    }
+
+    private void copyItemToolStripMenuItem_Click(object sender, EventArgs e) {      
+      if (tvBuilder.SelectedNode is Item selectedItem) {
+        _copiedItem = selectedItem; // Assuming AsClone creates a deep copy of the item
+        LogMsg($"Item '{selectedItem.Name}' copied.");
+      }
+    }
+
+    private void pasteItemToolStripMenuItem_Click(object sender, EventArgs e) {
+      if (_copiedItem != null && tvBuilder.SelectedNode is Item selectedItem) {
+        _itemCaster.CopyItemTo(selectedItem, _copiedItem);
+        LogMsg($"Item '{_copiedItem.Name}' pasted under '{selectedItem.Name}'.");
+      }
     }
   }
 }
