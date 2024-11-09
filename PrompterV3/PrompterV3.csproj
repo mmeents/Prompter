@@ -63,8 +63,11 @@
     <Compile Include="Models\Exceptions.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\FilePackage.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemCaster.cs" />
+    <Compile Include="Models\Items.cs" />
     <Compile Include="Models\TypeCaster.cs" />
+    <Compile Include="Models\WirePackage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -98,13 +101,13 @@
       <Version>2.16.24</Version>
     </PackageReference>
     <PackageReference Include="MessagePack">
-      <Version>2.5.129</Version>
+      <Version>2.5.187</Version>
     </PackageReference>
     <PackageReference Include="MessagePack.Annotations">
-      <Version>2.5.129</Version>
+      <Version>2.5.187</Version>
     </PackageReference>
     <PackageReference Include="MessagePackAnalyzer">
-      <Version>2.5.129</Version>
+      <Version>2.5.187</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

@@ -17,11 +17,12 @@ using System.Reflection.Emit;
 using System.Net;
 using PropertyGridEx;
 using FastColoredTextBoxNS;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PrompterV3 {
   public partial class Form1:Form {
     #region initialization
-    private const string _appVerison = "3.0.0";
+    private const string _appVerison = "3.0.1";
     private const string _defaultUrl = "https://mmeents.github.io/files/PrompterV200.ptv";
     private string _defaultDir = "C:\\ProgramData\\MMCommons";
     private string _defaultFile = "C:\\ProgramData\\MMCommons\\PrompterV301.pv3";    
@@ -35,6 +36,7 @@ namespace PrompterV3 {
     private Types _types;
     private ItemCaster _itemCaster;
     private Item _inEditItem = null;
+    private Item _copiedItem = null;
     private bool _inReorder = false;
     private bool _doPrompt = true;
     #endregion
@@ -197,9 +199,11 @@ namespace PrompterV3 {
         props.Item.Clear();
         props.Refresh();
         lbFocus.Text="Select Node to focus";
+        _inEditItem = null;
       } else if(e.TabPageIndex==1) {
         try {
-          _fileName=edFileName.Text;
+          _inEditItem = null;  // we dont want the last tree closed to be the focus
+          _fileName =edFileName.Text;
           int fnl = _fileName.ParseLast("\\").Length+1;
           _folder=_fileName.Substring(0, _fileName.Length-fnl);
 
@@ -226,7 +230,7 @@ namespace PrompterV3 {
     }
 
     private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
-      this.Text=(tabControl1.SelectedIndex==0) ? $"PrompterV{_appVerison} Pick file and type password." : $"PrompterV{_appVerison} file:{_fileName}";
+      this.Text=(tabControl1.SelectedIndex==0) ? $"PrompterV{_appVerison} Pick file to store the tree " : $"PrompterV{_appVerison} file:{_fileName}";
       if(tabControl1.SelectedIndex==1) {
         SetInProgress(6000);        
         _itemCaster.LoadTreeviewItemsAsync(tvBuilder, pbMain);
@@ -367,6 +371,9 @@ namespace PrompterV3 {
       } else {
         moveDownToolStripMenuItem.Enabled=false;
       }
+
+      copyItemToolStripMenuItem.Enabled = _inEditItem != null;
+      pasteItemToolStripMenuItem.Enabled = (_copiedItem != null && _inEditItem is Item selectedItem);
     }
     private void addTemplateToolStripMenuItem_Click(object sender, EventArgs e) {
     }
@@ -708,6 +715,25 @@ namespace PrompterV3 {
 
     private void pbMain_Click(object sender, EventArgs e) {
 
+    }
+
+    private void copyItemToolStripMenuItem_Click(object sender, EventArgs e) {      
+      if (tvBuilder.SelectedNode is Item selectedItem) {
+        _copiedItem = selectedItem; // Assuming AsClone creates a deep copy of the item
+        LogMsg($"Item '{selectedItem.Name}' copied.");
+      }
+    }
+
+    private void pasteItemToolStripMenuItem_Click(object sender, EventArgs e) {
+      if (_copiedItem != null && tvBuilder.SelectedNode is Item selectedItem) {
+        try { 
+        _itemCaster.CopyItemTo(selectedItem, _copiedItem);
+        } catch (Exception ex) {
+          LogMsg($"Error pasting item: {ex.Message}");
+          MessageBox.Show($"Error pasting item: {ex.Message}");
+        }
+        LogMsg($"Item '{_copiedItem.Name}' pasted under '{selectedItem.Name}'.");
+      }
     }
   }
 }
