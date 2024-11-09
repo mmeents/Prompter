@@ -336,7 +336,21 @@ namespace PrompterV3.Models {
       _=Task.Run(async () => await _package.SaveAsync().ConfigureAwait(false));
     }
 
+    private bool IsDescendant(Item potentialDescendant, Item potentialAncestor) {
+      Item current = potentialDescendant;
+      while (current != null) {
+        if (current == potentialAncestor) {
+          return true;
+        }
+        current = current.Parent as Item;
+      }
+      return false;
+    }
+
     public void CopyItemTo(Item newOwnerItem, Item itemToCopy) {
+      if (IsDescendant(newOwnerItem, itemToCopy)) {
+        throw new InvalidOperationException("Cannot copy an item to one of its descendants.");
+      }
       Item newItem = itemToCopy.AsClone();
       newItem.Id = _items.GetNextId();
       newItem.OwnerId = newOwnerItem.Id;

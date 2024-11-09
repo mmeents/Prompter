@@ -725,7 +725,12 @@ namespace PrompterV3 {
 
     private void pasteItemToolStripMenuItem_Click(object sender, EventArgs e) {
       if (_copiedItem != null && tvBuilder.SelectedNode is Item selectedItem) {
+        try { 
         _itemCaster.CopyItemTo(selectedItem, _copiedItem);
+        } catch (Exception ex) {
+          LogMsg($"Error pasting item: {ex.Message}");
+          MessageBox.Show($"Error pasting item: {ex.Message}");
+        }
         LogMsg($"Item '{_copiedItem.Name}' pasted under '{selectedItem.Name}'.");
       }
     }
