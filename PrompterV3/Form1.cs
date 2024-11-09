@@ -22,7 +22,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace PrompterV3 {
   public partial class Form1:Form {
     #region initialization
-    private const string _appVerison = "3.0.0";
+    private const string _appVerison = "3.0.1";
     private const string _defaultUrl = "https://mmeents.github.io/files/PrompterV200.ptv";
     private string _defaultDir = "C:\\ProgramData\\MMCommons";
     private string _defaultFile = "C:\\ProgramData\\MMCommons\\PrompterV301.pv3";    
@@ -202,7 +202,8 @@ namespace PrompterV3 {
         _inEditItem = null;
       } else if(e.TabPageIndex==1) {
         try {
-          _fileName=edFileName.Text;
+          _inEditItem = null;  // we dont want the last tree closed to be the focus
+          _fileName =edFileName.Text;
           int fnl = _fileName.ParseLast("\\").Length+1;
           _folder=_fileName.Substring(0, _fileName.Length-fnl);
 
@@ -229,7 +230,7 @@ namespace PrompterV3 {
     }
 
     private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
-      this.Text=(tabControl1.SelectedIndex==0) ? $"PrompterV{_appVerison} Pick file and type password." : $"PrompterV{_appVerison} file:{_fileName}";
+      this.Text=(tabControl1.SelectedIndex==0) ? $"PrompterV{_appVerison} Pick file to store the tree " : $"PrompterV{_appVerison} file:{_fileName}";
       if(tabControl1.SelectedIndex==1) {
         SetInProgress(6000);        
         _itemCaster.LoadTreeviewItemsAsync(tvBuilder, pbMain);
