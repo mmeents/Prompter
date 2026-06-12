@@ -101,10 +101,10 @@
       <Version>2.16.24</Version>
     </PackageReference>
     <PackageReference Include="MessagePack">
-      <Version>2.5.187</Version>
+      <Version>3.1.7</Version>
     </PackageReference>
     <PackageReference Include="MessagePack.Annotations">
-      <Version>2.5.187</Version>
+      <Version>3.1.7</Version>
     </PackageReference>
     <PackageReference Include="MessagePackAnalyzer">
       <Version>2.5.187</Version>
